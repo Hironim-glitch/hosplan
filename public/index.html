@@ -10,15 +10,13 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Original site color palette updated with vibrant tones */
         .text-etrust-blue { color: #0033A0; }
-        .bg-etrust-blue { background-color: #2563EB; } /* Vibrant Primary Blue */
-        .bg-etrust-dark-blue { background-color: #1E1B9B; } /* Deep Vibrant Navy */
-        .bg-etrust-mid-blue { background-color: #2143C1; } /* Transitional Blue */
-        .bg-etrust-light-vibrant { background-color: #3B82F6; } /* Lighter Vibrant Blue */
+        .bg-etrust-blue { background-color: #2563EB; }
+        .bg-etrust-dark-blue { background-color: #1E1B9B; }
+        .bg-etrust-mid-blue { background-color: #2143C1; }
+        .bg-etrust-light-vibrant { background-color: #3B82F6; }
     </style>
     <style data-purpose="custom-layout">
-        /* Specific hero background styling to mimic image overlay */
         .hero-overlay {
             background: linear-gradient(rgba(248, 250, 252, 0.85), rgba(248, 250, 252, 0.85)), url('https://placehold.co/1920x1080/e2e8f0/ffffff?text=Medical+Environment+Background');
             background-size: cover;
@@ -26,8 +24,6 @@
             position: relative;
             overflow: hidden;
         }
-
-        /* Subtle pulse line pattern for hero background */
         .hero-pattern {
             position: absolute;
             top: 0;
@@ -39,7 +35,6 @@
             opacity: 0.4;
             pointer-events: none;
         }
-
         .hero-bg-text {
             position: absolute;
             right: -5%;
@@ -52,37 +47,32 @@
             white-space: nowrap;
             pointer-events: none;
         }
-        
-        /* Modern tech background pattern for AirBan */
         .airban-grid-bg {
             background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
             background-size: 24px 24px;
         }
-
-        /* Subtle dot grid for intro section */
         .dot-grid-bg {
             background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
             background-size: 20px 20px;
         }
-        
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* Sharp corners forced for all tiles */
         .sharp-tile {
             border-radius: 0 !important;
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
+
+<!-- HEADER -->
 <header class="bg-white border-b sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4">
             <div class="flex-shrink-0">
-                <img alt="eTrustMedical Logo" class="h-10" src=""/>
+                <img alt="eTrustMedical Logo" class="h-10" src="/hosplan/etrust-logo_53b8645.svg"/>
             </div>
             <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-600">
                 <a class="hover:text-[#0033A0]" href="#">O nas</a>
@@ -103,6 +93,8 @@
         </div>
     </div>
 </header>
+
+<!-- BREADCRUMB -->
 <div class="bg-white py-2 border-b">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="text-xs text-gray-400">
@@ -110,6 +102,8 @@
         </nav>
     </div>
 </div>
+
+<!-- HERO -->
 <section class="hero-overlay py-20 lg:py-40">
     <div class="hero-pattern"></div>
     <div class="hero-bg-text">HosPanel</div>
@@ -121,6 +115,8 @@
         </p>
     </div>
 </section>
+
+<!-- INTRO SECTION -->
 <section class="bg-white py-24 relative overflow-hidden">
     <div class="absolute inset-0 dot-grid-bg opacity-40"></div>
     <div class="absolute -right-20 top-1/4 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-60"></div>
@@ -150,12 +146,15 @@
                 <div class="absolute -inset-4 bg-gradient-to-tr from-blue-100 to-transparent rounded-3xl -rotate-2 scale-105 opacity-50"></div>
                 <div class="relative group">
                     <div class="absolute -inset-1 bg-gradient-to-r from-[#2563EB] to-[#1E1B9B] rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-                    <img alt="HosPanel Interface on Tablet" class="relative max-w-lg w-full shadow-2xl rounded-xl border border-gray-100 bg-white" src=""/>
+                    <!-- Tablet screenshot -->
+                    <img alt="HosPanel Interface on Tablet" class="relative max-w-lg w-full shadow-2xl rounded-xl border border-gray-100 bg-white" src="/hosplan/hospanel_15379b8.png"/>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- FEATURES GRID -->
 <section class="bg-white py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl lg:text-4xl font-bold text-center text-[#0033A0] mb-16">
@@ -210,8 +209,11 @@
                     <p class="text-sm">Wyższy standard opieki nad pacjentem</p>
                 </div>
             </div>
-            <div class="bg-gray-200 sharp-tile min-h-[300px] overflow-hidden">
-                <img alt="Medical Professional" class="w-full h-full object-cover" src=""/>
+            <!-- Kafelek ze zdjęciem - wideo z systemu -->
+            <div class="bg-gray-900 sharp-tile min-h-[300px] overflow-hidden">
+                <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                    <source src="/hosplan/hospanel_medium_71accc5.mp4" type="video/mp4"/>
+                </video>
             </div>
             <div class="bg-[#2563EB] sharp-tile p-8 text-white min-h-[300px] flex flex-col justify-between">
                 <div>
@@ -264,6 +266,8 @@
         </div>
     </div>
 </section>
+
+<!-- AIRBAN SECTION -->
 <section class="bg-white py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
         <h2 class="text-4xl lg:text-5xl font-bold text-[#0033A0]">
@@ -299,13 +303,15 @@
                 <div class="mt-12">
                     <button class="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-200 bg-[#2563EB] hover:bg-[#3B82F6] sharp-tile">
                         Poznaj korzyści AirBan™
-                        <svg class="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                        <svg class="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- OTHER MODULES -->
 <section class="bg-gray-50 py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-4xl font-bold text-center text-[#0033A0] mb-16">
@@ -334,11 +340,13 @@
             </div>
             <div class="bg-[#1E1B9B] p-8 text-white h-48 flex flex-col sharp-tile">
                 <h4 class="text-xl font-bold mb-2">Optymalizacja procesów</h4>
-                <p class="text-xs">Optymalizacja zagadnień w części „białej”, jak i w części „szarej”.</p>
+                <p class="text-xs">Optymalizacja zagadnień w części „białej", jak i w części „szarej".</p>
             </div>
         </div>
     </div>
 </section>
+
+<!-- CONTACT SECTION -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
     <div class="flex flex-col md:flex-row bg-[#1E1B9B] overflow-hidden sharp-tile">
         <div class="md:w-1/2 p-12 text-white flex flex-col justify-between">
@@ -352,10 +360,13 @@
             </div>
         </div>
         <div class="md:w-1/2 bg-gray-900">
-            <img alt="Contact Person" class="w-full h-full object-cover opacity-80" src=""/>
+            <!-- Zdjęcie kontaktowe -->
+            <img alt="Contact Person" class="w-full h-full object-cover opacity-80" src="/hosplan/Mariusz-Budzisz.jpg"/>
         </div>
     </div>
 </section>
+
+<!-- FOOTER -->
 <footer class="bg-[#122445] text-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -378,7 +389,7 @@
                 </div>
                 <div class="mt-12 flex justify-end">
                     <div class="flex flex-col items-end space-y-2">
-                        <img alt="Logo" class="opacity-80" src=""/>
+                        <img alt="Logo" class="h-8 opacity-80" src="/hosplan/etrust-logo_53b8645.svg"/>
                         <div class="text-[10px] text-gray-400 text-right">
                             eTrustMedical © 2022<br/>
                             Site by Minima Advertising People
@@ -389,6 +400,8 @@
         </div>
     </div>
 </footer>
+
+<!-- COOKIE BANNER -->
 <div class="fixed bottom-0 left-0 right-0 bg-gray-100 border-t py-4 z-[100]">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-600">
         <p>
@@ -398,5 +411,6 @@
         <button class="mt-4 sm:mt-0 bg-[#2563EB] hover:bg-[#1E1B9B] text-white px-8 py-1 sharp-tile">Ok</button>
     </div>
 </div>
+
 </body>
 </html>
