@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>HosPanel™ - eTrust Medical</title>
-     <link rel="icon" href="favicon.ico" type="favicon-16x16.png"/>
+    <link rel="icon" href="favicon.ico" type="favicon-16x16.png"/>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
@@ -66,7 +66,13 @@
             border-radius: 0 !important;
         }
 
-        /* ===================== MODULE TILES ===================== */
+        /* ===================== MODULE TILES FIX Z PLIKU MODUL.HTML ===================== */
+        .modules-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
         .modules-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -94,8 +100,9 @@
             z-index: 5;
         }
 
-        /* Gdy jakikolwiek kafelek w gridzie jest hovered — granatowy overlay na pozostałe */
-        .modules-grid:has(.module-tile:hover) .module-tile:not(:hover)::after {
+        /* GLOBAL HOVER EFFECT - Zmiana z .modules-grid na .modules-wrapper, 
+           dzięki czemu przyciemniają się kafelki we wszystkich rzędach */
+        .modules-wrapper:has(.module-tile:hover) .module-tile:not(:hover)::after {
             opacity: 0.9;
         }
 
@@ -156,7 +163,6 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-<!-- HEADER -->
 <header class="bg-white border-b sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4">
@@ -183,7 +189,6 @@
     </div>
 </header>
 
-<!-- BREADCRUMB -->
 <div class="bg-white py-2 border-b">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="text-xs text-gray-400">
@@ -192,16 +197,12 @@
     </div>
 </div>
 
-<!-- HERO VIDEO -->
 <section class="relative overflow-hidden" style="min-height: 100vh;">
-    <!-- Video background -->
     <video autoplay muted loop playsinline
            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
         <source src="./GlownyFilm.mp4" type="video/mp4"/>
     </video>
-    <!-- Dark overlay -->
     <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.45); z-index: 1;"></div>
-    <!-- Content -->
     <div class="relative z-10 flex flex-col justify-end h-full px-4 sm:px-6 lg:px-8 pb-20" style="min-height: 100vh;">
         <div class="max-w-7xl mx-auto w-full">
             <h1 class="text-5xl lg:text-8xl font-bold text-white mb-8 drop-shadow-lg">HosPanel™</h1>
@@ -212,7 +213,6 @@
     </div>
 </section>
 
-<!-- INTRO SECTION -->
 <section class="bg-white py-24 relative overflow-hidden">
     <div class="absolute inset-0 dot-grid-bg opacity-40"></div>
     <div class="absolute -right-20 top-1/4 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-60"></div>
@@ -253,7 +253,6 @@
     </div>
 </section>
 
-<!-- FEATURES GRID -->
 <section class="bg-white py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl lg:text-4xl font-bold text-center text-[#0033A0] mb-16">
@@ -365,7 +364,6 @@
     </div>
 </section>
 
-<!-- AIRBAN SECTION -->
 <section class="bg-white py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
         <h2 class="text-4xl lg:text-5xl font-bold text-[#0033A0]">
@@ -409,114 +407,108 @@
     </div>
 </section>
 
-<!-- OTHER MODULES -->
 <section class="bg-gray-50 py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-4xl font-bold text-center text-[#0033A0] mb-16">
             Zobacz pozostałe <span class="text-[#1E1B9B]">moduły AirBan™</span>
         </h2>
 
-        <!-- ROW 1 -->
-        <div class="modules-grid mb-2">
+        <div class="modules-wrapper">
 
-            <!-- SorBan -->
-            <div class="module-tile" 
-                 onmouseenter="playVideo(this)" 
-                 onmouseleave="pauseVideo(this)">
-                <div class="module-tile-top" style="background-color: #2563EB;">
-                    <h4>SorBan™</h4>
-                    <p>System wspiera pracę Szpitalnego Oddziału Ratunkowego</p>
+            <div class="modules-grid">
+
+                <div class="module-tile" 
+                     onmouseenter="playVideo(this)" 
+                     onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background-color: #2563EB;">
+                        <h4>SorBan™</h4>
+                        <p>System wspiera pracę Szpitalnego Oddziału Ratunkowego</p>
+                    </div>
+                    <div class="module-tile-video">
+                        <video muted playsinline preload="metadata">
+                            <source src="./SorBan.mp4" type="video/mp4"/>
+                        </video>
+                    </div>
                 </div>
-                <div class="module-tile-video">
-                    <video muted playsinline preload="metadata">
-                        <source src="./SorBan.mp4" type="video/mp4"/>
-                    </video>
+
+                <div class="module-tile"
+                     onmouseenter="playVideo(this)"
+                     onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background-color: #1E1B9B;">
+                        <h4>RadBan™</h4>
+                        <p>System wspierający organizację pracy zakładów diagnostyki obrazowej</p>
+                    </div>
+                    <div class="module-tile-video">
+                        <video muted playsinline preload="metadata">
+                            <source src="./RadBan.mp4" type="video/mp4"/>
+                        </video>
+                    </div>
+                </div>
+
+                <div class="module-tile active-tile"
+                     onmouseenter="playVideo(this)"
+                     onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background-color: #2143C1; border: 2px solid rgba(255,255,255,0.25);">
+                        <h4>HosPanel™</h4>
+                        <p>Elektroniczny obchód lekarski systemem oceny parametrów życiowych oraz modułem ZWR</p>
+                    </div>
+                    <div class="module-tile-video">
+                        <video muted playsinline preload="metadata">
+                            <source src="./HosPanel.mp4" type="video/mp4"/>
+                        </video>
+                    </div>
                 </div>
             </div>
 
-            <!-- RadBan -->
-            <div class="module-tile"
-                 onmouseenter="playVideo(this)"
-                 onmouseleave="pauseVideo(this)">
-                <div class="module-tile-top" style="background-color: #1E1B9B;">
-                    <h4>RadBan™</h4>
-                    <p>System wspierający organizację pracy zakładów diagnostyki obrazowej</p>
-                </div>
-                <div class="module-tile-video">
-                    <video muted playsinline preload="metadata">
-                        <source src="./RadBan.mp4" type="video/mp4"/>
-                    </video>
-                </div>
-            </div>
+            <div class="modules-grid">
 
-            <!-- HosPanel (active/current page) -->
-            <div class="module-tile active-tile"
-                 onmouseenter="playVideo(this)"
-                 onmouseleave="pauseVideo(this)">
-                <div class="module-tile-top" style="background-color: #2143C1; border: 2px solid rgba(255,255,255,0.25);">
-                    <h4>HosPanel™</h4>
-                    <p>Elektroniczny obchód lekarski systemem oceny parametrów życiowych oraz modułem ZWR</p>
+                <div class="module-tile"
+                     onmouseenter="playVideo(this)"
+                     onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background-color: #3B82F6;">
+                        <h4>eCRF</h4>
+                        <p>Zintegrowana platforma badawcza</p>
+                    </div>
+                    <div class="module-tile-video">
+                        <video muted playsinline preload="metadata">
+                            <source src="./eCRF.mp4" type="video/mp4"/>
+                        </video>
+                    </div>
                 </div>
-                <div class="module-tile-video">
-                    <video muted playsinline preload="metadata">
-                        <source src="./HosPanel.mp4" type="video/mp4"/>
-                    </video>
+
+                <div class="module-tile"
+                     onmouseenter="playVideo(this)"
+                     onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background-color: #2143C1;">
+                        <h4>Systemy dedykowane</h4>
+                        <p>Naszą specjalizacją w tym zakresie są integracje między systemami.</p>
+                    </div>
+                    <div class="module-tile-video">
+                        <video muted playsinline preload="metadata">
+                            <source src="./SystemyDedykowane.mp4" type="video/mp4"/>
+                        </video>
+                    </div>
+                </div>
+
+                <div class="module-tile"
+                     onmouseenter="playVideo(this)"
+                     onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background-color: #1E1B9B;">
+                        <h4>Optymalizacja procesów</h4>
+                        <p>Optymalizacja zagadnień w części „białej", jak i w części „szarej".</p>
+                    </div>
+                    <div class="module-tile-video">
+                        <video muted playsinline preload="metadata">
+                            <source src="./OptymalizacjaProcesow.mp4" type="video/mp4"/>
+                        </video>
+                    </div>
                 </div>
             </div>
+            
         </div>
-
-        <!-- ROW 2 -->
-        <div class="modules-grid">
-
-            <!-- eCRF -->
-            <div class="module-tile"
-                 onmouseenter="playVideo(this)"
-                 onmouseleave="pauseVideo(this)">
-                <div class="module-tile-top" style="background-color: #3B82F6;">
-                    <h4>eCRF</h4>
-                    <p>Zintegrowana platforma badawcza</p>
-                </div>
-                <div class="module-tile-video">
-                    <video muted playsinline preload="metadata">
-                        <source src="./eCRF.mp4" type="video/mp4"/>
-                    </video>
-                </div>
-            </div>
-
-            <!-- Systemy dedykowane -->
-            <div class="module-tile"
-                 onmouseenter="playVideo(this)"
-                 onmouseleave="pauseVideo(this)">
-                <div class="module-tile-top" style="background-color: #2143C1;">
-                    <h4>Systemy dedykowane</h4>
-                    <p>Naszą specjalizacją w tym zakresie są integracje między systemami.</p>
-                </div>
-                <div class="module-tile-video">
-                    <video muted playsinline preload="metadata">
-                        <source src="./SystemyDedykowane.mp4" type="video/mp4"/>
-                    </video>
-                </div>
-            </div>
-
-            <!-- Optymalizacja procesów -->
-            <div class="module-tile"
-                 onmouseenter="playVideo(this)"
-                 onmouseleave="pauseVideo(this)">
-                <div class="module-tile-top" style="background-color: #1E1B9B;">
-                    <h4>Optymalizacja procesów</h4>
-                    <p>Optymalizacja zagadnień w części „białej", jak i w części „szarej".</p>
-                </div>
-                <div class="module-tile-video">
-                    <video muted playsinline preload="metadata">
-                        <source src="./OptymalizacjaProcesow.mp4" type="video/mp4"/>
-                    </video>
-                </div>
-            </div>
         </div>
-    </div>
 </section>
 
-<!-- CONTACT SECTION -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
     <div class="flex flex-col md:flex-row bg-[#1E1B9B] overflow-hidden sharp-tile">
         <div class="md:w-1/2 p-12 text-white flex flex-col justify-between">
@@ -535,7 +527,6 @@
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="bg-[#122445] text-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -570,7 +561,6 @@
     </div>
 </footer>
 
-<!-- COOKIE BANNER -->
 <div class="fixed bottom-0 left-0 right-0 bg-gray-100 border-t py-4 z-[100]">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-600">
         <p>
