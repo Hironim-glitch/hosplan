@@ -99,11 +99,6 @@
             opacity: 0.9;
         }
 
-        /* Przyciemnienie przez JS */
-        .module-tile.dimmed::after {
-            opacity: 0.85 !important;
-        }
-
         /* Hoveredowany kafelek — bez overlaya, lekkie powiększenie */
         .module-tile:hover {
             transform: scale(1.04);
@@ -197,16 +192,23 @@
     </div>
 </div>
 
-<!-- HERO -->
-<section class="hero-overlay py-20 lg:py-40">
-    <div class="hero-pattern"></div>
-    <div class="hero-bg-text">HosPanel</div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <h1 class="text-6xl lg:text-8xl font-bold text-[#0033A0]/10 mb-8 absolute -top-12 lg:-top-16 left-4 select-none pointer-events-none">HOSPANEL</h1>
-        <h1 class="text-5xl lg:text-7xl font-bold text-[#0033A0] mb-8 drop-shadow-sm">HosPanel™</h1>
-        <p class="text-3xl lg:text-4xl text-gray-600 max-w-2xl leading-tight drop-shadow-sm">
-            Elektroniczny obchód lekarski z systemem oceny parametrów życiowych oraz modułem ZWR
-        </p>
+<!-- HERO VIDEO -->
+<section class="relative overflow-hidden" style="min-height: 100vh;">
+    <!-- Video background -->
+    <video autoplay muted loop playsinline
+           style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
+        <source src="./GlownyFilm.mp4" type="video/mp4"/>
+    </video>
+    <!-- Dark overlay -->
+    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.45); z-index: 1;"></div>
+    <!-- Content -->
+    <div class="relative z-10 flex flex-col justify-end h-full px-4 sm:px-6 lg:px-8 pb-20" style="min-height: 100vh;">
+        <div class="max-w-7xl mx-auto w-full">
+            <h1 class="text-5xl lg:text-8xl font-bold text-white mb-8 drop-shadow-lg">HosPanel™</h1>
+            <p class="text-2xl lg:text-4xl text-white/90 max-w-2xl leading-tight drop-shadow-md">
+                Elektroniczny obchód lekarski z systemem oceny parametrów życiowych oraz modułem ZWR
+            </p>
+        </div>
     </div>
 </section>
 
@@ -580,15 +582,11 @@
 </div>
 
 <script>
-    const allTiles = () => document.querySelectorAll('.module-tile');
-
     function playVideo(tile) {
         const video = tile.querySelector('video');
-        if (video) video.play().catch(() => {});
-        // Przyciemnij wszystkie inne kafelki
-        allTiles().forEach(t => {
-            if (t !== tile) t.classList.add('dimmed');
-        });
+        if (video) {
+            video.play().catch(() => {});
+        }
     }
 
     function pauseVideo(tile) {
@@ -597,32 +595,12 @@
             video.pause();
             video.currentTime = 0;
         }
-        // Przywroc wszystkie kafelki
-        allTiles().forEach(t => t.classList.remove('dimmed'));
     }
 
+    // Preload first frame for all videos
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.module-tile video').forEach(video => {
             video.load();
-        });
-    });
-</script>
-
-<script>
-    const allTiles = () => document.querySelectorAll('.module-tile');
-
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.module-tile video').forEach(v => v.load());
-
-        allTiles().forEach(tile => {
-            tile.addEventListener('mouseenter', () => {
-                allTiles().forEach(t => {
-                    if (t !== tile) t.classList.add('dimmed');
-                });
-            });
-            tile.addEventListener('mouseleave', () => {
-                allTiles().forEach(t => t.classList.remove('dimmed'));
-            });
         });
     });
 </script>
