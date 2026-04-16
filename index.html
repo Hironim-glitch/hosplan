@@ -65,6 +65,80 @@
         .sharp-tile {
             border-radius: 0 !important;
         }
+
+        /* ===================== MODULE TILES ===================== */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .module-tile {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        z-index 0s;
+            z-index: 1;
+        }
+
+        /* When any tile in the grid is hovered, dim siblings */
+        .modules-grid:has(.module-tile:hover) .module-tile:not(:hover) {
+            opacity: 0.45;
+            filter: brightness(0.6) saturate(0.5);
+            transition: opacity 0.3s ease, filter 0.3s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .module-tile:hover {
+            transform: scale(1.04);
+            z-index: 10;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Top colored area with text */
+        .module-tile-top {
+            padding: 28px 28px 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .module-tile-top h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0;
+            line-height: 1.2;
+        }
+
+        .module-tile-top p {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.85);
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        /* Bottom video area */
+        .module-tile-video {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .module-tile-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            /* Keep first frame visible */
+            transition: opacity 0.3s ease;
+        }
+
+        /* Active tile highlight — currently shown (HosPanel) */
+        .module-tile.active-tile {
+            outline: 2px solid rgba(255,255,255,0.3);
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -148,12 +222,11 @@
                 <div class="absolute -inset-4 bg-gradient-to-tr from-blue-100 to-transparent rounded-3xl -rotate-2 scale-105 opacity-50"></div>
                 <div class="relative group">
                     <div class="absolute -inset-1 bg-gradient-to-r from-[#2563EB] to-[#1E1B9B] rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-                    <!-- Tablet screenshot -->
-                        =<img 
+                    <img 
                         alt="HosPanel Interface on Tablet" 
                         class="relative max-w-lg w-full shadow-2xl rounded-xl border border-gray-100 bg-white" 
                         src="./hospanel.15379b8.png"
-                        />
+                    />
                 </div>
             </div>
         </div>
@@ -215,7 +288,6 @@
                     <p class="text-sm">Wyższy standard opieki nad pacjentem</p>
                 </div>
             </div>
-            <!-- Kafelek ze zdjęciem - wideo z systemu -->
             <div class="bg-gray-900 sharp-tile min-h-[300px] overflow-hidden">
                 <video class="w-full h-full object-cover" autoplay muted loop playsinline>
                     <source src="./hospanel-square.ee3752e.mp4" type="video/mp4"/>
@@ -323,30 +395,102 @@
         <h2 class="text-4xl font-bold text-center text-[#0033A0] mb-16">
             Zobacz pozostałe <span class="text-[#1E1B9B]">moduły AirBan™</span>
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <div class="bg-[#2563EB] p-8 text-white h-48 flex flex-col sharp-tile">
-                <h4 class="text-xl font-bold mb-2">SorBan™</h4>
-                <p class="text-xs">System wspiera pracę Szpitalnego Oddziału Ratunkowego</p>
+
+        <!-- ROW 1 -->
+        <div class="modules-grid mb-2">
+
+            <!-- SorBan -->
+            <div class="module-tile" 
+                 onmouseenter="playVideo(this)" 
+                 onmouseleave="pauseVideo(this)">
+                <div class="module-tile-top" style="background-color: #2563EB;">
+                    <h4>SorBan™</h4>
+                    <p>System wspiera pracę Szpitalnego Oddziału Ratunkowego</p>
+                </div>
+                <div class="module-tile-video">
+                    <video muted playsinline preload="metadata">
+                        <source src="./SorBan.mp4" type="video/mp4"/>
+                    </video>
+                </div>
             </div>
-            <div class="bg-[#1E1B9B] p-8 text-white h-48 flex flex-col sharp-tile">
-                <h4 class="text-xl font-bold mb-2">RadBan™</h4>
-                <p class="text-xs">System wspierający organizację pracy zakładów diagnostyki obrazowej</p>
+
+            <!-- RadBan -->
+            <div class="module-tile"
+                 onmouseenter="playVideo(this)"
+                 onmouseleave="pauseVideo(this)">
+                <div class="module-tile-top" style="background-color: #1E1B9B;">
+                    <h4>RadBan™</h4>
+                    <p>System wspierający organizację pracy zakładów diagnostyki obrazowej</p>
+                </div>
+                <div class="module-tile-video">
+                    <video muted playsinline preload="metadata">
+                        <source src="./RadBan.mp4" type="video/mp4"/>
+                    </video>
+                </div>
             </div>
-            <div class="bg-[#2143C1] p-8 text-white h-48 flex flex-col sharp-tile border-2 border-white/20">
-                <h4 class="text-xl font-bold mb-2">HosPanel™</h4>
-                <p class="text-xs">Elektroniczny obchód lekarski systemem oceny parametrów życiowych oraz modułem ZWR</p>
+
+            <!-- HosPanel (active/current page) -->
+            <div class="module-tile active-tile"
+                 onmouseenter="playVideo(this)"
+                 onmouseleave="pauseVideo(this)">
+                <div class="module-tile-top" style="background-color: #2143C1; border: 2px solid rgba(255,255,255,0.25);">
+                    <h4>HosPanel™</h4>
+                    <p>Elektroniczny obchód lekarski systemem oceny parametrów życiowych oraz modułem ZWR</p>
+                </div>
+                <div class="module-tile-video">
+                    <video muted playsinline preload="metadata">
+                        <source src="./HosPanel.mp4" type="video/mp4"/>
+                    </video>
+                </div>
             </div>
-            <div class="bg-[#3B82F6] p-8 text-white h-48 flex flex-col sharp-tile">
-                <h4 class="text-xl font-bold mb-2">eCRF</h4>
-                <p class="text-xs">Zintegrowana platforma badawcza</p>
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="modules-grid">
+
+            <!-- eCRF -->
+            <div class="module-tile"
+                 onmouseenter="playVideo(this)"
+                 onmouseleave="pauseVideo(this)">
+                <div class="module-tile-top" style="background-color: #3B82F6;">
+                    <h4>eCRF</h4>
+                    <p>Zintegrowana platforma badawcza</p>
+                </div>
+                <div class="module-tile-video">
+                    <video muted playsinline preload="metadata">
+                        <source src="./eCRF.mp4" type="video/mp4"/>
+                    </video>
+                </div>
             </div>
-            <div class="bg-[#2143C1] p-8 text-white h-48 flex flex-col sharp-tile">
-                <h4 class="text-xl font-bold mb-2">Systemy dedykowane</h4>
-                <p class="text-xs">Naszą specjalizacją w tym zakresie są integracje między systemami.</p>
+
+            <!-- Systemy dedykowane -->
+            <div class="module-tile"
+                 onmouseenter="playVideo(this)"
+                 onmouseleave="pauseVideo(this)">
+                <div class="module-tile-top" style="background-color: #2143C1;">
+                    <h4>Systemy dedykowane</h4>
+                    <p>Naszą specjalizacją w tym zakresie są integracje między systemami.</p>
+                </div>
+                <div class="module-tile-video">
+                    <video muted playsinline preload="metadata">
+                        <source src="./SystemyDedykowane.mp4" type="video/mp4"/>
+                    </video>
+                </div>
             </div>
-            <div class="bg-[#1E1B9B] p-8 text-white h-48 flex flex-col sharp-tile">
-                <h4 class="text-xl font-bold mb-2">Optymalizacja procesów</h4>
-                <p class="text-xs">Optymalizacja zagadnień w części „białej", jak i w części „szarej".</p>
+
+            <!-- Optymalizacja procesów -->
+            <div class="module-tile"
+                 onmouseenter="playVideo(this)"
+                 onmouseleave="pauseVideo(this)">
+                <div class="module-tile-top" style="background-color: #1E1B9B;">
+                    <h4>Optymalizacja procesów</h4>
+                    <p>Optymalizacja zagadnień w części „białej", jak i w części „szarej".</p>
+                </div>
+                <div class="module-tile-video">
+                    <video muted playsinline preload="metadata">
+                        <source src="./OptymalizacjaProcesow.mp4" type="video/mp4"/>
+                    </video>
+                </div>
             </div>
         </div>
     </div>
@@ -366,7 +510,6 @@
             </div>
         </div>
         <div class="md:w-1/2 bg-gray-900">
-            <!-- Zdjęcie kontaktowe -->
             <img alt="Contact Person" class="w-full h-full object-cover opacity-80" src="./Mariusz-Budzisz.jpg"/>
         </div>
     </div>
@@ -395,7 +538,7 @@
                 </div>
                 <div class="mt-12 flex justify-end">
                     <div class="flex flex-col items-end space-y-2">
-                            <img src="./logo.svg">
+                        <img src="./logo.svg">
                         <div class="text-[10px] text-gray-400 text-right">
                             eTrustMedical © 2022<br/>
                             Site by Minima Advertising People
@@ -417,6 +560,30 @@
         <button class="mt-4 sm:mt-0 bg-[#2563EB] hover:bg-[#1E1B9B] text-white px-8 py-1 sharp-tile">Ok</button>
     </div>
 </div>
+
+<script>
+    function playVideo(tile) {
+        const video = tile.querySelector('video');
+        if (video) {
+            video.play().catch(() => {});
+        }
+    }
+
+    function pauseVideo(tile) {
+        const video = tile.querySelector('video');
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+        }
+    }
+
+    // Preload first frame for all videos
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.module-tile video').forEach(video => {
+            video.load();
+        });
+    });
+</script>
 
 </body>
 </html>
