@@ -3,619 +3,1412 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>HosPanel™ - eTrust Medical</title>
+    <title>HosPanel™ — eTrust Medical</title>
     <link rel="icon" href="./favicon-16x16.png" type="image/png"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Lora:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet"/>
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
-    <style data-purpose="typography">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue-900: #0B1730;
+            --blue-800: #111F40;
+            --blue-700: #132D6E;
+            --blue-brand: #133AD8;
+            --blue-600:   #1A48E8;
+            --blue-500:   #2255F0;
+            --blue-400:   #4D7EFF;
+            --blue-300:   #7BA3FF;
+            --accent:     #4D7EFF;
+            --white:      #FFFFFF;
+            --off-white:  #EEF1FB;
+            --gray-light: #C4CFEC;
+            --gray-mid:   #6B82B8;
+            --text-body:  #A8BDD8;
+            --font-display: 'Lora', serif;
+            --font-body: 'Nunito', sans-serif;
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Inter', sans-serif;
-        }
-        .text-etrust-blue { color: #0033A0; }
-        .bg-etrust-blue { background-color: #2563EB; }
-        .bg-etrust-dark-blue { background-color: #1E1B9B; }
-        .bg-etrust-mid-blue { background-color: #2143C1; }
-        .bg-etrust-light-vibrant { background-color: #3B82F6; }
-    </style>
-    <style data-purpose="custom-layout">
-        .hero-overlay {
-            background: linear-gradient(rgba(248, 250, 252, 0.85), rgba(248, 250, 252, 0.85)), url('https://placehold.co/1920x1080/e2e8f0/ffffff?text=Medical+Environment+Background');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='200' height='100' viewBox='0 0 200 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 L60 50 L70 30 L80 70 L90 50 L200 50' stroke='%230033A0' stroke-width='0.5' fill='none' opacity='0.1'/%3E%3C/svg%3E");
-            background-size: 400px 200px;
-            opacity: 0.4;
-            pointer-events: none;
-        }
-        .hero-bg-text {
-            position: absolute;
-            right: -5%;
-            bottom: -10%;
-            font-size: 25rem;
-            font-weight: 900;
-            color: rgba(0, 51, 160, 0.03);
-            user-select: none;
-            line-height: 1;
-            white-space: nowrap;
-            pointer-events: none;
-        }
-        .airban-grid-bg {
-            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
-            background-size: 24px 24px;
-        }
-        .dot-grid-bg {
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .sharp-tile {
-            border-radius: 0 !important;
+            font-family: var(--font-body);
+            background: var(--blue-900);
+            color: var(--white);
+            overflow-x: hidden;
         }
 
-        /* ===================== MODULE TILES FIX Z PLIKU MODUL.HTML ===================== */
-        .modules-wrapper {
+        /* cursor removed */
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--blue-900); }
+        ::-webkit-scrollbar-thumb { background: var(--blue-500);  }
+
+        /* ===== REVEAL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out-quart), transform 0.8s var(--ease-out-quart);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s var(--ease-out-quart), transform 0.8s var(--ease-out-quart);
+        }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s var(--ease-out-quart), transform 0.8s var(--ease-out-quart);
+        }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 clamp(20px, 5vw, 60px);
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+            border-bottom: 1px solid transparent;
+        }
+        header.scrolled {
+            background: rgba(11, 23, 48, 0.88);
+            backdrop-filter: blur(20px);
+            border-color: rgba(255,255,255,0.06);
+        }
+        .logo img { height: 36px; filter: brightness(0) invert(1) opacity(0.9); }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+        nav a {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: color 0.2s;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px; left: 0;
+            width: 0; height: 1px;
+            background: var(--accent);
+            transition: width 0.3s var(--ease-out-quart);
+        }
+        nav a:hover { color: var(--white); }
+        nav a:hover::after { width: 100%; }
+        nav a.active { color: var(--white); }
+        .nav-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.15); }
+        .nav-lang {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+        .nav-socials { display: flex; gap: 12px; align-items: center; }
+        .nav-socials a { 
+            color: rgba(255,255,255,0.4);
+            transition: color 0.2s; 
+            display: flex;
+            align-items: center;
+        }
+        .nav-socials a:hover { color: rgba(255,255,255,1); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: 0.3s; }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            position: relative;
+            z-index: 10;
+            padding: 100px clamp(20px, 5vw, 60px) 0;
+        }
+        .breadcrumb nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 12px;
+            color: var(--gray-mid);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .breadcrumb nav a { color: var(--gray-mid); text-decoration: none; }
+        .breadcrumb nav a:hover { color: var(--white); }
+        .breadcrumb nav a::after { display: none; }
+        .breadcrumb nav span { color: var(--white); font-weight: 600; }
+        .breadcrumb-sep { opacity: 0.4; }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-        }
-
-        .modules-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-
-        .module-tile {
-            position: relative;
+            justify-content: flex-end;
+            padding: 0 clamp(20px, 5vw, 60px) clamp(60px, 8vh, 120px);
             overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        z-index 0s;
+        }
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                160deg,
+                rgba(11, 23, 48, 0.3) 0%,
+                rgba(11, 23, 48, 0.6) 50%,
+                rgba(11, 23, 48, 0.92) 100%
+            );
             z-index: 1;
         }
+        .hero-noise {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            background-size: 200px;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 1200px;
+        }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 28px;
+            opacity: 0.9;
+        }
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 28px; height: 1px;
+            background: var(--accent);
+            opacity: 0.7;
+        }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(56px, 9vw, 130px);
+            line-height: 0.95;
+            letter-spacing: -0.01em;
+            color: var(--white);
+            margin-bottom: 32px;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--blue-300);
+        }
+        .hero-sub {
+            font-size: clamp(16px, 1.8vw, 20px);
+            font-weight: 400;
+            line-height: 1.65;
+            color: rgba(255,255,255,0.72);
+            max-width: 540px;
+        }
+        .hero-scroll {
+            position: absolute;
+            bottom: clamp(24px, 4vh, 50px);
+            right: clamp(20px, 5vw, 60px);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gray-mid);
+        }
+        .hero-scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollLine 2s ease-in-out infinite;
+        }
+        @keyframes scrollLine {
+            0%, 100% { transform: scaleY(1); opacity: 1; }
+            50% { transform: scaleY(0.3); opacity: 0.3; }
+        }
 
-        /* Niebieski granatowy overlay na nieaktywnych kafelkach */
-        .module-tile::after {
+        /* ===== SECTION BASE ===== */
+        section { position: relative; }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 clamp(20px, 5vw, 60px);
+        }
+
+        /* ===== INTRO SECTION ===== */
+        .intro {
+            background: #EEF1FB;
+            padding: clamp(80px, 10vh, 140px) 0;
+            color: var(--blue-900);
+            overflow: hidden;
+        }
+        .intro .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .intro-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--blue-brand);
+            border: 1px solid #99B0E8;
+            background: #DDE8FA;
+            padding: 6px 14px;
+            margin-bottom: 24px;
+            
+        }
+        .intro h2 {
+            font-family: var(--font-display);
+            font-size: clamp(42px, 5vw, 68px);
+            color: var(--blue-900);
+            line-height: 1.0;
+            margin-bottom: 28px;
+        }
+        .intro-lead {
+            font-size: clamp(17px, 1.8vw, 21px);
+            font-weight: 600;
+            line-height: 1.6;
+            color: #0F2560;
+            margin-bottom: 24px;
+        }
+        .intro-body {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #2E4470;
+        }
+        .intro-ecosystem {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 36px;
+            padding-top: 36px;
+            border-top: 1px solid #C8D9F5;
+        }
+        .eco-dot {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--white);
+            margin-left: -8px;
+            border: 2px solid var(--white);
+        }
+        .eco-dot:first-child { margin-left: 0; }
+        .intro-image {
+            position: relative;
+        }
+        .intro-image::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            background: linear-gradient(135deg, var(--blue-400) 0%, var(--blue-600) 100%);
+            opacity: 0.07;
+            
+        }
+        .intro-image img {
+            width: 100%;
+            display: block;
+            
+            box-shadow: 0 40px 80px rgba(19,58,216,0.18);
+            position: relative;
+            z-index: 1;
+        }
+        .intro-image-label {
+            position: absolute;
+            bottom: -16px;
+            right: -16px;
+            background: var(--blue-brand);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 10px 18px;
+            z-index: 2;
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features {
+            background: var(--blue-900);
+            padding: clamp(80px, 10vh, 140px) 0;
+        }
+        .features-header {
+            margin-bottom: 64px;
+        }
+        .section-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        .section-eyebrow::before {
+            content: '';
+            display: block;
+            width: 24px; height: 1px;
+            background: var(--accent);
+        }
+        .features-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 4.5vw, 60px);
+            line-height: 1.05;
+            color: var(--white);
+        }
+        .features-header h2 span { color: var(--blue-300); }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .feature-card {
+            background: #0F1C3A;
+            padding: 44px 36px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.4s;
+            
+        }
+        .feature-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-color: #1E1B9B;
+            background: linear-gradient(135deg, var(--blue-400), var(--blue-brand));
             opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: 5;
+            transition: opacity 0.4s;
+            
         }
-
-        /* GLOBAL HOVER EFFECT - Zmiana z .modules-grid na .modules-wrapper, 
-           dzięki czemu przyciemniają się kafelki we wszystkich rzędach */
-        .modules-wrapper:has(.module-tile:hover) .module-tile:not(:hover)::after {
+        .feature-card:hover { background: #132050; }
+        .feature-card:hover::before { opacity: 0.1; }
+        .feature-number {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            opacity: 0.7;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+        }
+        .feature-icon {
+            width: 48px; height: 48px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
             opacity: 0.9;
         }
-
-        /* Hoveredowany kafelek — bez overlaya, lekkie powiększenie */
-        .module-tile:hover {
-            transform: scale(1.04);
-            z-index: 10;
+        .feature-icon svg { width: 100%; height: 100%; }
+        .feature-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.35;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        .feature-divider {
+            width: 32px; height: 1px;
+            background: var(--accent);
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+            opacity: 0.5;
+        }
+        .feature-benefit-label {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .feature-benefit {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-body);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Top colored area with text — stała minimalna wysokość wyrównuje SorBan i eCRF */
-        .module-tile-top {
-            padding: 28px 28px 24px;
+        /* ===== AIRBAN SECTION ===== */
+        .airban {
+            background: var(--blue-900);
+            padding: clamp(80px, 10vh, 140px) 0;
+            color: var(--white);
+        }
+        .airban-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .airban-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 5vw, 64px);
+            color: var(--white);
+            line-height: 1.05;
+        }
+        .airban-header h2 .gradient-text {
+            background: linear-gradient(90deg, var(--blue-400), var(--blue-300));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .airban-block {
+            background: #0F1C3A;
+            color: var(--white);
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            overflow: hidden;
             position: relative;
-            z-index: 2;
-            min-height: 130px;
+            
+            border: 1px solid rgba(77,126,255,0.12);
+            box-shadow: 0 24px 60px rgba(19,58,216,0.2);
+        }
+        .airban-block::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.03) 1px, transparent 0);
+            background-size: 28px 28px;
+            pointer-events: none;
+        }
+        .airban-left {
+            padding: clamp(40px, 5vw, 80px);
+            border-right: 1px solid rgba(77,126,255,0.15);
+            position: relative;
+            z-index: 1;
+            background: rgba(19, 58, 216, 0.18);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-
-        .module-tile-top h4 {
-            font-size: 1.25rem;
+        .airban-logo {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 5vw, 64px);
+            color: var(--white);
+            line-height: 1.0;
+            margin-bottom: 40px;
+        }
+        .airban-logo span { color: var(--blue-300); }
+        .airban-modules {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .airban-module-btn {
+            width: 56px; height: 56px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: var(--white);
+            font-family: var(--font-display);
+            font-size: 22px;
+            cursor: pointer;
+            transition: border-color 0.3s, background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .airban-module-btn:hover {
+            border-color: var(--accent);
+            background: rgba(77,126,255,0.1);
+        }
+        .airban-right {
+            padding: clamp(40px, 5vw, 80px);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .airban-text {
+            font-size: clamp(16px, 1.8vw, 20px);
+            font-weight: 300;
+            line-height: 1.65;
+            color: var(--text-body);
+            margin-bottom: 36px;
+        }
+        .airban-quote {
+            border-left: 2px solid var(--blue-400);
+            padding: 20px 28px;
+            background: rgba(255,255,255,0.03);
+            font-size: 15px;
+            font-style: italic;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 48px;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--blue-brand);
+            color: var(--white);
+            font-size: 13px;
             font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0;
-            line-height: 1.2;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 16px 32px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, gap 0.3s;
         }
+        .btn-primary:hover {
+            background: var(--blue-600);
+            gap: 20px;
+        }
+        .btn-arrow {
+            width: 18px; height: 18px;
+            transition: transform 0.3s;
+        }
+        .btn-primary:hover .btn-arrow { transform: translateX(4px); }
 
+        /* ===== MODULES SECTION ===== */
+        .modules-section {
+            background: var(--blue-900);
+            padding: clamp(80px, 10vh, 140px) 0;
+        }
+        .modules-section-header {
+            margin-bottom: 56px;
+        }
+        .modules-section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 4.5vw, 60px);
+            color: var(--white);
+        }
+        .modules-section-header h2 span { color: var(--blue-300); }
+        .modules-wrapper { display: flex; flex-direction: column; gap: 12px; }
+        .modules-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .module-tile {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), z-index 0s;
+            z-index: 1;
+            
+        }
+        .modules-wrapper:has(.module-tile:hover) .module-tile:not(:hover)::after { opacity: 0.75; }
+        .module-tile::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #0B1730;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .module-tile:hover { transform: scale(1.03); z-index: 10; }
+        .module-tile-top {
+            padding: 32px 28px 28px;
+            position: relative;
+            z-index: 2;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .module-tile-top h4 {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            color: var(--white);
+        }
         .module-tile-top p {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.85);
-            margin-top: 16px;
-            line-height: 1.5;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.75);
+            margin-top: 14px;
+            line-height: 1.55;
         }
-
-        /* Bottom video area */
         .module-tile-video {
             position: relative;
             width: 100%;
             height: 200px;
             overflow: hidden;
-            background: #000;
+            background: #0B1730;
         }
-
         .module-tile-video video {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
             display: block;
             transition: opacity 0.3s ease;
         }
+        .module-tile.active-tile { outline: 1px solid var(--blue-brand); outline-offset: -1px; }
 
-        /* Active tile highlight — currently shown (HosPanel) */
-        .module-tile.active-tile {
-            outline: 2px solid rgba(255,255,255,0.3);
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            background: var(--blue-900);
+            padding: 0 clamp(20px, 5vw, 60px) clamp(80px, 10vh, 140px);
         }
+        .contact-block {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            background: var(--blue-800);
+            
+            box-shadow: 0 24px 60px rgba(19,58,216,0.2);
+        }
+        .contact-left {
+            padding: clamp(48px, 6vw, 80px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .contact-left h3 {
+            font-family: var(--font-display);
+            font-size: clamp(26px, 3vw, 40px);
+            line-height: 1.2;
+            color: var(--white);
+            margin-bottom: 48px;
+        }
+        .contact-email {
+            font-size: clamp(15px, 1.6vw, 18px);
+            color: var(--accent);
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .contact-email:hover { text-decoration: underline; }
+        .contact-right img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.75;
+            filter: grayscale(20%);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #080F22;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding: clamp(60px, 8vh, 100px) clamp(20px, 5vw, 60px) 40px;
+        }
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 48px;
+            margin-bottom: 60px;
+        }
+        .footer-links a {
+            display: block;
+            font-size: 13px;
+            color: var(--gray-mid);
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--white); }
+        .footer-links a.active { color: var(--white); font-weight: 600; }
+        .footer-social a {
+            display: block;
+            font-size: 13px;
+            color: var(--gray-mid);
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+        .footer-social a:hover { color: var(--white); }
+        .footer-contact h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+        }
+        .footer-contact p, .footer-contact a {
+            font-size: 13px;
+            color: var(--gray-mid);
+            line-height: 1.8;
+            text-decoration: none;
+        }
+        .footer-contact a:hover { color: var(--white); }
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 28px;
+        }
+        .footer-bottom img { height: 28px; filter: brightness(0) invert(1); opacity: 0.4; }
+        .footer-copy {
+            font-size: 11px;
+            color: var(--gray-mid);
+            text-align: right;
+            line-height: 1.7;
+            opacity: 0.6;
+        }
+
+        /* ===== COOKIE BANNER ===== */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: var(--blue-800);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 20px clamp(20px, 5vw, 60px);
+            z-index: 200;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .cookie-text {
+            font-size: 12px;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+        .cookie-text a { color: var(--accent); }
+        .cookie-btn {
+            flex-shrink: 0;
+            background: var(--blue-brand);
+            color: var(--white);
+            border: none;
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 10px 28px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .cookie-btn:hover { background: var(--blue-600); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .intro .container { grid-template-columns: 1fr; }
+            .intro-image { order: -1; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .airban-block { grid-template-columns: 1fr; }
+            .airban-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+            .contact-block { grid-template-columns: 1fr; }
+            .contact-right { height: 300px; }
+            .footer-inner { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hamburger { display: flex; }
+            .features-grid { grid-template-columns: 1fr; }
+            .modules-row { grid-template-columns: 1fr; }
+            .footer-inner { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .footer-copy { text-align: left; }
+        }
+
+        /* ===== ANIMATED COUNTER LINE ===== */
+        .stat-line {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 64px;
+        }
+        .stat-item {
+            padding: 36px 40px;
+            border-right: 1px solid rgba(255,255,255,0.08);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 5vw, 60px);
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-number span { color: var(--accent); }
+        .stat-label {
+            font-size: 12px;
+            color: var(--gray-mid);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+
+        /* Feature cards — initial state hidden, JS adds card-visible */
+        .feature-card {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.6s cubic-bezier(0.25,1,0.5,1), transform 0.6s cubic-bezier(0.25,1,0.5,1), background 0.4s;
+        }
+        .feature-card.card-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Module tiles — initial state */
+        .module-tile {
+            opacity: 0;
+            transform: translateY(24px) scale(0.98);
+            transition: opacity 0.55s cubic-bezier(0.25,1,0.5,1),
+                        transform 0.55s cubic-bezier(0.25,1,0.5,1);
+        }
+        .module-tile.tile-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        /* Keep hover scale working after visible */
+        .module-tile.tile-visible:hover {
+            transform: scale(1.03);
+            z-index: 10;
+        }
+
+        /* Eyebrow pseudo-element line grows in */
+        .section-eyebrow::before,
+        .hero-eyebrow::before {
+            width: 0;
+            transition: width 0.6s cubic-bezier(0.25,1,0.5,1);
+        }
+        .section-eyebrow.eyebrow-animated::before,
+        .hero-eyebrow.eyebrow-animated::before {
+            width: 24px;
+        }
+        .hero-eyebrow.eyebrow-animated::before {
+            width: 28px;
+        }
+
+        /* Smooth section background transitions */
+        section {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Scrollbar refined */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: var(--blue-900); }
+        ::-webkit-scrollbar-thumb { background: var(--blue-brand); }
+
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-<header class="bg-white border-b sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-4">
-            <div class="flex-shrink-0">
-            <img alt="eTrustMedical Logo" class="h-10" src="./etrust-logo.53b8645.svg"/>
-            </div>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-600">
-                <a class="hover:text-[#0033A0]" href="#">O nas</a>
-                <a class="text-[#0033A0]" href="#">Produkty</a>
-                <a class="hover:text-[#0033A0]" href="#">Zespół</a>
-                <a class="hover:text-[#0033A0]" href="#">Kontakt</a>
-                <span class="text-gray-300">|</span>
-                <a class="hover:text-[#0033A0]" href="#">KPO</a>
-                <a class="hover:text-[#0033A0]" href="#">CWBK</a>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <span class="text-xs font-bold text-[#0033A0]">Polski</span>
-                <div class="flex items-center space-x-2">
-                    <a href="#" class="hover:opacity-75 transition-opacity">
-                        <img src="./in.svg" alt="LinkedIn" class="w-5 h-5"/>
-                    </a>
-                    <a href="#" class="hover:opacity-75 transition-opacity">
-                        <img src="./facebook.svg" alt="Facebook" class="w-5 h-5"/>
-                    </a>
-                </div>
-            </div>
+
+<!-- ===== HEADER ===== -->
+<header id="header">
+    <div class="logo">
+        <img alt="eTrustMedical Logo" src="./etrust-logo.53b8645.svg"/>
+    </div>
+    <nav>
+        <a href="#">O nas</a>
+        <a href="#" class="active">Produkty</a>
+        <a href="#">Zespół</a>
+        <a href="#">Kontakt</a>
+        <div class="nav-divider"></div>
+        <a href="#">KPO</a>
+        <a href="#">CWBK</a>
+        <div class="nav-divider"></div>
+        <span class="nav-lang">PL</span>
+        <div class="nav-socials">
+            <a href="#" title="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.5"/></svg>
+            </a>
+            <a href="#" title="Facebook">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
         </div>
+    </nav>
+    <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
     </div>
 </header>
 
-<div class="bg-white py-2 border-b">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav class="text-xs text-gray-400">
-            Home > Produkty > <span class="font-bold text-gray-600">HosPanel</span>
-        </nav>
-    </div>
-</div>
-
-<section class="relative overflow-hidden" style="min-height: 100vh;">
-    <video autoplay muted loop playsinline
-           style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
         <source src="./GlownyFilm.mp4" type="video/mp4"/>
     </video>
-    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.45); z-index: 1;"></div>
-    <div class="relative z-10 flex flex-col justify-end h-full px-4 sm:px-6 lg:px-8 pb-20" style="min-height: 100vh;">
-        <div class="max-w-7xl mx-auto w-full">
-            <h1 class="text-5xl lg:text-8xl font-bold text-white mb-8 drop-shadow-lg">HosPanel™</h1>
-            <p class="text-2xl lg:text-4xl text-white/90 max-w-2xl leading-tight drop-shadow-md">
-                Elektroniczny obchód lekarski z systemem oceny parametrów życiowych oraz modułem ZWR
+    <div class="hero-overlay"></div>
+    <div class="hero-noise"></div>
+
+    <!-- breadcrumb inside hero -->
+    <div style="position:absolute; top: 96px; left: clamp(20px,5vw,60px); z-index:3;">
+        <nav style="display:flex;gap:8px;align-items:center;font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.07em;text-transform:uppercase;">
+            <a href="#" style="color:rgba(255,255,255,0.35);text-decoration:none;">Home</a>
+            <span style="opacity:0.4">›</span>
+            <a href="#" style="color:rgba(255,255,255,0.35);text-decoration:none;">Produkty</a>
+            <span style="opacity:0.4">›</span>
+            <span style="color:rgba(255,255,255,0.85);font-weight:600;">HosPanel</span>
+        </nav>
+    </div>
+
+    <div class="hero-content">
+        <div class="hero-eyebrow reveal">Moduł Systemowy · AirBan™</div>
+        <h1 class="reveal" style="transition-delay:0.1s">
+            HosPanel<em>™</em>
+        </h1>
+        <p class="hero-sub reveal" style="transition-delay:0.2s">
+            Elektroniczny obchód lekarski z systemem oceny parametrów życiowych oraz modułem ZWR
+        </p>
+    </div>
+    <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        <span>Scroll</span>
+    </div>
+</section>
+
+<!-- ===== INTRO SECTION ===== -->
+<section class="intro">
+    <div class="container">
+        <div class="reveal-left">
+            <div class="intro-badge">Moduł Systemowy</div>
+            <h2>HosPanel™</h2>
+            <p class="intro-lead">
+                Zintegrowany z ruchem chorych, system prezentacji danych medycznych połączony z oceną parametrów życiowych pacjenta.
             </p>
+            <p class="intro-body">
+                Nowoczesne narzędzie dedykowane dla lekarzy i personelu medycznego, zapewniające pełne wsparcie dla Zespołów Wczesnego Reagowania (ZWR) oraz usprawniające codzienny proces obchodu lekarskiego.
+            </p>
+            <div class="intro-ecosystem">
+                <div class="eco-dot" style="background:#133AD8">AB</div>
+                <div class="eco-dot" style="background:#1A48E8">HP</div>
+                <span style="font-size:13px;color:#4A6090;font-weight:500;margin-left:6px;">Część ekosystemu AirBan™</span>
+            </div>
+        </div>
+        <div class="intro-image reveal-right">
+            <img alt="HosPanel Interface on Tablet" src="./hospanel.15379b8.png"/>
+            <div class="intro-image-label">HosPanel™ UI</div>
         </div>
     </div>
 </section>
 
-<section class="bg-white py-24 relative overflow-hidden">
-    <div class="absolute inset-0 dot-grid-bg opacity-40"></div>
-    <div class="absolute -right-20 top-1/4 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-60"></div>
-    <div class="absolute -left-20 bottom-1/4 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl opacity-40"></div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="flex flex-col lg:flex-row items-center justify-between gap-16">
-            <div class="w-full lg:w-1/2">
-                <div class="inline-block px-3 py-1 bg-blue-50 text-[#2563EB] text-xs font-bold uppercase tracking-wider mb-4 border border-blue-100">Moduł Systemowy</div>
-                <h2 class="text-4xl lg:text-5xl font-bold text-[#0033A0] mb-8 leading-tight">HosPanel™</h2>
-                <div class="space-y-6">
-                    <p class="text-2xl text-[#1E1B9B] font-semibold leading-relaxed">
-                        Zintegrowany z ruchem chorych, system prezentacji danych medycznych połączony z oceną parametrów życiowych pacjenta.
-                    </p>
-                    <p class="text-lg text-gray-600 leading-relaxed">
-                        Nowoczesne narzędzie dedykowane dla lekarzy i personelu medycznego, zapewniające pełne wsparcie dla Zespołów Wczesnego Reagowania (ZWR) oraz usprawniające codzienny proces obchodu lekarskiego.
-                    </p>
-                    <div class="flex items-center space-x-4 pt-4">
-                        <div class="flex -space-x-2">
-                            <div class="w-10 h-10 rounded-full border-2 border-white bg-[#2563EB] flex items-center justify-center text-white font-bold text-xs shadow-md">AB</div>
-                            <div class="w-10 h-10 rounded-full border-2 border-white bg-[#1E1B9B] flex items-center justify-center text-white font-bold text-xs shadow-md">HP</div>
-                        </div>
-                        <span class="text-sm font-medium text-gray-500">Część ekosystemu AirBan™</span>
-                    </div>
-                </div>
+<!-- ===== FEATURES SECTION ===== -->
+<section class="features">
+    <div class="container">
+        <div class="features-header reveal">
+            <div class="section-eyebrow">Funkcjonalności</div>
+            <h2>Najważniejsze cechy systemu<br/><span>HosPanel™</span></h2>
+        </div>
+
+        <div class="stat-line reveal">
+            <div class="stat-item">
+                <div class="stat-number">100<span>%</span></div>
+                <div class="stat-label">Zgodność z HL7 FHIR</div>
             </div>
-            <div class="w-full lg:w-1/2 relative">
-                <div class="absolute -inset-4 bg-gradient-to-tr from-blue-100 to-transparent rounded-3xl -rotate-2 scale-105 opacity-50"></div>
-                <div class="relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-[#2563EB] to-[#1E1B9B] rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-                    <img 
-                        alt="HosPanel Interface on Tablet" 
-                        class="relative max-w-lg w-full shadow-2xl rounded-xl border border-gray-100 bg-white" 
-                        src="./hospanel.15379b8.png"
-                    />
-                </div>
+            <div class="stat-item">
+                <div class="stat-number">24<span>/7</span></div>
+                <div class="stat-label">Monitoring parametrów</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">ZWR<span>+</span></div>
+                <div class="stat-label">Moduł wczesnego reagowania</div>
             </div>
         </div>
-    </div>
-</section>
 
-<section class="bg-white py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl lg:text-4xl font-bold text-center text-[#0033A0] mb-16">
-            Najważniejsze cechy systemu <span class="text-[#1E1B9B]">HosPanel™</span>
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px]">
-            <div class="bg-[#3B82F6] sharp-tile p-8 text-white min-h-[300px] flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-semibold leading-tight">Integracja z ruchem chorych w Szpitalu</h3>
-                        <svg class="w-10 h-10 flex-shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn1-1{fill:#ffffff;}.icn1-2{fill:none;stroke:rgba(255,255,255,0.4);stroke-miterlimit:10;stroke-width:4.49px;}</style></defs><path class="icn1-1" d="M215.53,109.08l-72-34.2a4.29,4.29,0,0,0-3.64,0l-72,34.2a4.23,4.23,0,0,0,0,7.65l72,34.19a4.24,4.24,0,0,0,3.64,0l72-34.19a4.23,4.23,0,0,0,0-7.65Zm-73.8,33.33-62.11-29.5,62.11-29.52,62.12,29.52Z"/><path class="icn1-1" d="M211.9,137.92l-70.17,33.33L71.57,137.92a4.23,4.23,0,0,0-3.64,7.64l72,34.19a4.28,4.28,0,0,0,1.82.41,4.24,4.24,0,0,0,1.81-.41l72-34.19a4.23,4.23,0,0,0-3.63-7.64Z"/><path class="icn1-1" d="M211.9,166.75l-70.17,33.33L71.57,166.75a4.23,4.23,0,0,0-3.64,7.64l72,34.2a4.27,4.27,0,0,0,1.82.4,4.23,4.23,0,0,0,1.81-.4l72-34.2a4.23,4.23,0,0,0-3.63-7.64Z"/><circle class="icn1-2" cx="141.73" cy="141.73" r="134.65"/></svg>
-                          
-                    </div>
+        <div class="features-grid">
+            <!-- Card 1 -->
+            <div class="feature-card reveal" style="transition-delay:0.05s">
+                <div class="feature-number">01</div>
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn1-1{fill:#ffffff;}.icn1-2{fill:none;stroke:rgba(255,255,255,0.3);stroke-miterlimit:10;stroke-width:4.49px;}</style></defs><path class="icn1-1" d="M215.53,109.08l-72-34.2a4.29,4.29,0,0,0-3.64,0l-72,34.2a4.23,4.23,0,0,0,0,7.65l72,34.19a4.24,4.24,0,0,0,3.64,0l72-34.19a4.23,4.23,0,0,0,0-7.65Zm-73.8,33.33-62.11-29.5,62.11-29.52,62.12,29.52Z"/><path class="icn1-1" d="M211.9,137.92l-70.17,33.33L71.57,137.92a4.23,4.23,0,0,0-3.64,7.64l72,34.19a4.28,4.28,0,0,0,1.82.41,4.24,4.24,0,0,0,1.81-.41l72-34.19a4.23,4.23,0,0,0-3.63-7.64Z"/><path class="icn1-1" d="M211.9,166.75l-70.17,33.33L71.57,166.75a4.23,4.23,0,0,0-3.64,7.64l72,34.2a4.27,4.27,0,0,0,1.82.4,4.23,4.23,0,0,0,1.81-.4l72-34.2a4.23,4.23,0,0,0-3.63-7.64Z"/><circle class="icn1-2" cx="141.73" cy="141.73" r="134.65"/></svg>
                 </div>
-                <div class="mt-4">
-                    <p class="text-xs font-bold uppercase text-white/90 mb-2">KORZYŚĆ:</p>
-                    <p class="text-sm">Eliminacja druków i braku informacji na obchodzie lekarskim</p>
-                </div>
+                <div class="feature-title">Integracja z ruchem chorych w Szpitalu</div>
+                <div class="feature-divider"></div>
+                <div class="feature-benefit-label">Korzyść</div>
+                <div class="feature-benefit">Eliminacja druków i braku informacji na obchodzie lekarskim</div>
             </div>
-            <div class="bg-[#2563EB] sharp-tile p-8 text-white min-h-[300px] flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-semibold leading-tight">Praca w trybie offline</h3>
-                        <svg class="w-10 h-10 flex-shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn2-1{fill:#ffffff;}.icn2-2{fill:none;stroke:rgba(255,255,255,0.4);stroke-miterlimit:10;stroke-width:4.49px;}</style></defs><path class="icn2-1" d="M94.8,155.11l-.83-.82a3,3,0,0,0-4.14,0L75.36,168.78a2.91,2.91,0,0,0,0,4.13l35.15,35.2a3,3,0,0,0,2.07.87,2.91,2.91,0,0,0,2.07-.87l14.47-14.48a2.92,2.92,0,0,0,0-4.14L126,186.35l20,2.55h.37a30.18,30.18,0,0,0,15.82-4.52l.13-.08,42.39-29.23h0a9.32,9.32,0,0,0,4.09-9.62,8.85,8.85,0,0,0-13-6l-28.49,13.15a9.22,9.22,0,0,0-.75-3.26,10.26,10.26,0,0,0-6.09-5.11h-.18a31.52,31.52,0,0,0-6.93-.38,72.78,72.78,0,0,1-19.72-2.11c-21.75-5.35-35.49,9.29-38.84,13.38Zm17.78,46.78-31-31L91.9,160.49l31,31.06Zm19.66-54.53h0a77.78,77.78,0,0,0,21.16,2.28,31.8,31.8,0,0,1,5.52.24,4.19,4.19,0,0,1,2.35,2,5.18,5.18,0,0,1-.29,3.92c-2.18,1.69-8,5.17-19.33,5.17a2.93,2.93,0,0,0,0,5.85c13.36,0,20.47-4.38,23.39-6.74l33.29-15.32h.14a3.15,3.15,0,0,1,3.59.26,3.05,3.05,0,0,1,1.05,1.66,3.47,3.47,0,0,1-1.46,3.49h-.14l-42.39,29.24h0A24.39,24.39,0,0,1,146.58,183l-27.31-3.51L99,159.28c1.45-1.93,13.36-16.78,33.29-11.89Z"/><path class="icn2-1" d="M105.16,74.49a2.92,2.92,0,0,0-2.92,2.92v49.71a2.94,2.94,0,0,0,2.92,2.92h87.71a2.93,2.93,0,1,0,0-5.85h-4.38V87.65a2.94,2.94,0,0,0-2.92-2.93H171A2.93,2.93,0,0,0,168,87.65v36.54h-7.31V77.41a2.9,2.9,0,0,0-2.92-2.92H143.17a2.92,2.92,0,0,0-2.92,2.92v46.78H134.4V97.88A2.94,2.94,0,0,0,131.48,95H116.86a2.92,2.92,0,0,0-2.92,2.93v26.31h-5.85V77.41a2.92,2.92,0,0,0-2.93-2.92Zm68.71,16.08h8.77v33.62h-8.77ZM146.09,80.33h8.78v43.86h-8.78ZM119.78,100.8h8.77v23.39h-8.77Z"/><circle class="icn2-2" cx="141.73" cy="141.73" r="134.65"/></svg>
-                          
-                    </div>
+            <!-- Card 2 -->
+            <div class="feature-card reveal" style="transition-delay:0.10s">
+                <div class="feature-number">02</div>
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn2-1{fill:#ffffff;}.icn2-2{fill:none;stroke:rgba(255,255,255,0.3);stroke-miterlimit:10;stroke-width:4.49px;}</style></defs><path class="icn2-1" d="M94.8,155.11l-.83-.82a3,3,0,0,0-4.14,0L75.36,168.78a2.91,2.91,0,0,0,0,4.13l35.15,35.2a3,3,0,0,0,2.07.87,2.91,2.91,0,0,0,2.07-.87l14.47-14.48a2.92,2.92,0,0,0,0-4.14L126,186.35l20,2.55h.37a30.18,30.18,0,0,0,15.82-4.52l.13-.08,42.39-29.23h0a9.32,9.32,0,0,0,4.09-9.62,8.85,8.85,0,0,0-13-6l-28.49,13.15a9.22,9.22,0,0,0-.75-3.26,10.26,10.26,0,0,0-6.09-5.11h-.18a31.52,31.52,0,0,0-6.93-.38,72.78,72.78,0,0,1-19.72-2.11c-21.75-5.35-35.49,9.29-38.84,13.38Zm17.78,46.78-31-31L91.9,160.49l31,31.06Zm19.66-54.53h0a77.78,77.78,0,0,0,21.16,2.28,31.8,31.8,0,0,1,5.52.24,4.19,4.19,0,0,1,2.35,2,5.18,5.18,0,0,1-.29,3.92c-2.18,1.69-8,5.17-19.33,5.17a2.93,2.93,0,0,0,0,5.85c13.36,0,20.47-4.38,23.39-6.74l33.29-15.32h.14a3.15,3.15,0,0,1,3.59.26,3.05,3.05,0,0,1,1.05,1.66,3.47,3.47,0,0,1-1.46,3.49h-.14l-42.39,29.24h0A24.39,24.39,0,0,1,146.58,183l-27.31-3.51L99,159.28c1.45-1.93,13.36-16.78,33.29-11.89Z"/><path class="icn2-1" d="M105.16,74.49a2.92,2.92,0,0,0-2.92,2.92v49.71a2.94,2.94,0,0,0,2.92,2.92h87.71a2.93,2.93,0,1,0,0-5.85h-4.38V87.65a2.94,2.94,0,0,0-2.92-2.93H171A2.93,2.93,0,0,0,168,87.65v36.54h-7.31V77.41a2.9,2.9,0,0,0-2.92-2.92H143.17a2.92,2.92,0,0,0-2.92,2.92v46.78H134.4V97.88A2.94,2.94,0,0,0,131.48,95H116.86a2.92,2.92,0,0,0-2.92,2.93v26.31h-5.85V77.41a2.92,2.92,0,0,0-2.93-2.92Zm68.71,16.08h8.77v33.62h-8.77ZM146.09,80.33h8.78v43.86h-8.78ZM119.78,100.8h8.77v23.39h-8.77Z"/><circle class="icn2-2" cx="141.73" cy="141.73" r="134.65"/></svg>
                 </div>
-                <div class="mt-4">
-                    <p class="text-xs font-bold uppercase text-white/90 mb-2">KORZYŚĆ:</p>
-                    <p class="text-sm">Dostęp do danych pacjenta w każdym pomieszczeniu</p>
-                </div>
+                <div class="feature-title">Praca w trybie offline</div>
+                <div class="feature-divider"></div>
+                <div class="feature-benefit-label">Korzyść</div>
+                <div class="feature-benefit">Dostęp do danych pacjenta w każdym pomieszczeniu</div>
             </div>
-            <div class="bg-[#1E1B9B] sharp-tile p-8 text-white min-h-[300px] flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-semibold leading-tight">Przejrzysta prezentacja danych</h3>
-                        <svg class="w-10 h-10 flex-shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn3-1{fill:#ffffff;}.icn3-2{fill:none;stroke:rgba(255,255,255,0.4);stroke-miterlimit:10;stroke-width:4.49px;}</style></defs><path class="icn3-1" d="M97.38,90.9V192.56l54.51-48Z"/><path class="icn3-1" d="M151.89,90.9V192.56l54.52-48Z"/><circle class="icn3-2" cx="141.73" cy="141.73" r="134.65"/></svg>
-                          
-                    </div>
+            <!-- Card 3 -->
+            <div class="feature-card reveal" style="transition-delay:0.15s">
+                <div class="feature-number">03</div>
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn3-1{fill:#ffffff;}.icn3-2{fill:none;stroke:rgba(255,255,255,0.3);stroke-miterlimit:10;stroke-width:4.49px;}</style></defs><path class="icn3-1" d="M97.38,90.9V192.56l54.51-48Z"/><path class="icn3-1" d="M151.89,90.9V192.56l54.52-48Z"/><circle class="icn3-2" cx="141.73" cy="141.73" r="134.65"/></svg>
                 </div>
-                <div class="mt-4">
-                    <p class="text-xs font-bold uppercase text-white/90 mb-2">KORZYŚĆ:</p>
-                    <p class="text-sm">Minimalizacja czasu potrzebnego na dostęp do danych pacjenta</p>
-                </div>
+                <div class="feature-title">Przejrzysta prezentacja danych</div>
+                <div class="feature-divider"></div>
+                <div class="feature-benefit-label">Korzyść</div>
+                <div class="feature-benefit">Minimalizacja czasu potrzebnego na dostęp do danych pacjenta</div>
             </div>
-            <div class="bg-[#2143C1] sharp-tile p-8 text-white min-h-[300px] flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-semibold leading-tight">Integracja z urządzeniami do pomiarów parametrów życiowych</h3>
-                        <svg class="w-10 h-10 flex-shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn4-1{fill:none;stroke:rgba(255,255,255,0.4);stroke-miterlimit:10;stroke-width:4.49px;}.icn4-2{fill:#ffffff;}</style></defs><circle class="icn4-1" cx="141.73" cy="141.73" r="134.65"/><path class="icn4-2" d="M101.68,210.88H84.38a10.31,10.31,0,0,1-10.24-10.27V152.46a10.25,10.25,0,0,1,10.24-10.12h17.3a10.18,10.18,0,0,1,10.22,10.12v48.16a10.22,10.22,0,0,1-10.22,10.26"/><path class="icn4-2" d="M145,72.58h-17.4a10.18,10.18,0,0,0-10.12,10.18V200.61a10.21,10.21,0,0,0,10.12,10.27H145a10.22,10.22,0,0,0,10.12-10.27V82.76A10.18,10.18,0,0,0,145,72.58Z"/><path class="icn4-2" d="M201.66,162.82h0a4.32,4.32,0,0,1,0,8.63h0a4.28,4.28,0,0,1-4.29-4.32,4.33,4.33,0,0,1,4.31-4.31"/><path class="icn4-2" d="M201.66,172.9l3,0a4.68,4.68,0,0,1,4.62,4.63c.05,3.77,0,7.55,0,11.32a4.51,4.51,0,0,1-2.33,4,1,1,0,0,0-.54,1c0,4.23-.06,8.46,0,12.69a4,4,0,0,1-3.95,4.31h-.36a19.09,19.09,0,0,1-2.4-.16,3.64,3.64,0,0,1-2.87-3.52c0-2.24,0-4.48,0-6.72h0c0-2.21,0-4.42,0-6.64a.92.92,0,0,0-.52-1,4.51,4.51,0,0,1-2.34-4c0-3.8,0-7.6,0-11.4a4.68,4.68,0,0,1,4.61-4.57c1,0,2,0,3,0"/><path class="icn4-2" d="M192.24,207.27c0-1.6,0-3.2,0-4.8v-1.74a2.26,2.26,0,0,1,0-.26v-4.93a8.89,8.89,0,0,1-2.85-6.6c0-3.69-.05-7.62,0-11.5a9.25,9.25,0,0,1,3.82-7.38,8.68,8.68,0,0,1-.49-2.94,9,9,0,0,1,5.68-8.32V120.07A10.24,10.24,0,0,0,188.16,110H170.87a10.19,10.19,0,0,0-10.23,10.12v80.55a10.24,10.24,0,0,0,10.23,10.26h17.29a10,10,0,0,0,4.53-1.09,8.09,8.09,0,0,1-.45-2.52Z"/></svg>
-                          
-                    </div>
+            <!-- Card 4 -->
+            <div class="feature-card reveal" style="transition-delay:0.20s">
+                <div class="feature-number">04</div>
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn4-1{fill:none;stroke:rgba(255,255,255,0.3);stroke-miterlimit:10;stroke-width:4.49px;}.icn4-2{fill:#ffffff;}</style></defs><circle class="icn4-1" cx="141.73" cy="141.73" r="134.65"/><path class="icn4-2" d="M101.68,210.88H84.38a10.31,10.31,0,0,1-10.24-10.27V152.46a10.25,10.25,0,0,1,10.24-10.12h17.3a10.18,10.18,0,0,1,10.22,10.12v48.16a10.22,10.22,0,0,1-10.22,10.26"/><path class="icn4-2" d="M145,72.58h-17.4a10.18,10.18,0,0,0-10.12,10.18V200.61a10.21,10.21,0,0,0,10.12,10.27H145a10.22,10.22,0,0,0,10.12-10.27V82.76A10.18,10.18,0,0,0,145,72.58Z"/><path class="icn4-2" d="M201.66,162.82h0a4.32,4.32,0,0,1,0,8.63h0a4.28,4.28,0,0,1-4.29-4.32,4.33,4.33,0,0,1,4.31-4.31"/><path class="icn4-2" d="M201.66,172.9l3,0a4.68,4.68,0,0,1,4.62,4.63c.05,3.77,0,7.55,0,11.32a4.51,4.51,0,0,1-2.33,4,1,1,0,0,0-.54,1c0,4.23-.06,8.46,0,12.69a4,4,0,0,1-3.95,4.31h-.36a19.09,19.09,0,0,1-2.4-.16,3.64,3.64,0,0,1-2.87-3.52c0-2.24,0-4.48,0-6.72h0c0-2.21,0-4.42,0-6.64a.92.92,0,0,0-.52-1,4.51,4.51,0,0,1-2.34-4c0-3.8,0-7.6,0-11.4a4.68,4.68,0,0,1,4.61-4.57c1,0,2,0,3,0"/><path class="icn4-2" d="M192.24,207.27c0-1.6,0-3.2,0-4.8v-1.74a2.26,2.26,0,0,1,0-.26v-4.93a8.89,8.89,0,0,1-2.85-6.6c0-3.69-.05-7.62,0-11.5a9.25,9.25,0,0,1,3.82-7.38,8.68,8.68,0,0,1-.49-2.94,9,9,0,0,1,5.68-8.32V120.07A10.24,10.24,0,0,0,188.16,110H170.87a10.19,10.19,0,0,0-10.23,10.12v80.55a10.24,10.24,0,0,0,10.23,10.26h17.29a10,10,0,0,0,4.53-1.09,8.09,8.09,0,0,1-.45-2.52Z"/></svg>
                 </div>
-                <div class="mt-4">
-                    <p class="text-xs font-bold uppercase text-white/90 mb-2">KORZYŚĆ:</p>
-                    <p class="text-sm">Wyższy standard opieki nad pacjentem</p>
-                </div>
+                <div class="feature-title">Integracja z urządzeniami do pomiarów parametrów życiowych</div>
+                <div class="feature-divider"></div>
+                <div class="feature-benefit-label">Korzyść</div>
+                <div class="feature-benefit">Wyższy standard opieki nad pacjentem</div>
             </div>
-            <div class="bg-gray-900 sharp-tile min-h-[300px] overflow-hidden">
-                <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                    <source src="./hospanel-square.ee3752e.mp4" type="video/mp4"/>
-                </video>
+            <!-- Card 5 -->
+            <div class="feature-card reveal" style="transition-delay:0.25s">
+                <div class="feature-number">05</div>
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn5-1{fill:none;stroke:rgba(255,255,255,0.3);stroke-miterlimit:10;stroke-width:4.49px;}.icn5-2{fill:#ffffff;}</style></defs><circle class="icn5-1" cx="141.73" cy="141.73" r="134.65"/><path class="icn5-2" d="M181.38,159.94a30.27,30.27,0,0,1,5.1.43V112.81h-26a3.76,3.76,0,0,1-3.78-3.79V82.84H104.87a3.75,3.75,0,0,0-3.79,3.78V188.89a3.76,3.76,0,0,0,3.79,3.78h47.27a23.43,23.43,0,0,1-.14-3.2,29.42,29.42,0,0,1,29.38-29.53Zm-59.2-54.84H140.8a3.78,3.78,0,0,1,0,7.56H122.18a3.75,3.75,0,0,1-3.78-3.78,3.84,3.84,0,0,1,3.78-3.78Zm0,20.36h43.06a3.79,3.79,0,0,1,0,7.57H122.18a3.76,3.76,0,0,1-3.78-3.79A3.85,3.85,0,0,1,122.18,125.46Zm0,20.37h43.06a3.78,3.78,0,1,1,0,7.56H122.18a3.75,3.75,0,0,1-3.78-3.78A3.84,3.84,0,0,1,122.18,145.83Zm20.22,27.93H122.18A3.76,3.76,0,0,1,118.4,170a3.85,3.85,0,0,1,3.78-3.79H142.4a3.79,3.79,0,0,1,0,7.57Z"/><path class="icn5-2" d="M185.31,104.37,165,84a1.51,1.51,0,0,0-.73-.58v21.82H186c-.29-.44-.44-.73-.73-.87Z"/><path class="icn5-2" d="M211.35,212.74l-11.78-10.91a22,22,0,1,0-40.15-12.36,21.85,21.85,0,0,0,22,22,22.93,22.93,0,0,0,12.37-3.78l10.91,11.79.29.29a4.74,4.74,0,0,0,6.4-7ZM190.69,193.4h-5.52v5.53a3.79,3.79,0,0,1-7.57,0V193.4h-5.53a3.76,3.76,0,0,1-3.78-3.78,3.86,3.86,0,0,1,3.78-3.79h5.53v-5.52a3.79,3.79,0,1,1,7.57,0v5.52h5.52a3.79,3.79,0,1,1,0,7.57Z"/></svg>
+                </div>
+                <div class="feature-title">Dodawanie notatek tekstowych i głosowych</div>
+                <div class="feature-divider"></div>
+                <div class="feature-benefit-label">Korzyść</div>
+                <div class="feature-benefit">Oszczędność czasu — nie ma konieczności przepisywania informacji do komputera</div>
             </div>
-            <div class="bg-[#2563EB] sharp-tile p-8 text-white min-h-[300px] flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-semibold leading-tight">Dodawanie notatek tekstowych i głosowych</h3>
-                        <svg class="w-10 h-10 flex-shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn5-1{fill:none;stroke:rgba(255,255,255,0.4);stroke-miterlimit:10;stroke-width:4.49px;}.icn5-2{fill:#ffffff;}</style></defs><circle class="icn5-1" cx="141.73" cy="141.73" r="134.65"/><path class="icn5-2" d="M181.38,159.94a30.27,30.27,0,0,1,5.1.43V112.81h-26a3.76,3.76,0,0,1-3.78-3.79V82.84H104.87a3.75,3.75,0,0,0-3.79,3.78V188.89a3.76,3.76,0,0,0,3.79,3.78h47.27a23.43,23.43,0,0,1-.14-3.2,29.42,29.42,0,0,1,29.38-29.53Zm-59.2-54.84H140.8a3.78,3.78,0,0,1,0,7.56H122.18a3.75,3.75,0,0,1-3.78-3.78,3.84,3.84,0,0,1,3.78-3.78Zm0,20.36h43.06a3.79,3.79,0,0,1,0,7.57H122.18a3.76,3.76,0,0,1-3.78-3.79A3.85,3.85,0,0,1,122.18,125.46Zm0,20.37h43.06a3.78,3.78,0,1,1,0,7.56H122.18a3.75,3.75,0,0,1-3.78-3.78A3.84,3.84,0,0,1,122.18,145.83Zm20.22,27.93H122.18A3.76,3.76,0,0,1,118.4,170a3.85,3.85,0,0,1,3.78-3.79H142.4a3.79,3.79,0,0,1,0,7.57Z"/><path class="icn5-2" d="M185.31,104.37,165,84a1.51,1.51,0,0,0-.73-.58v21.82H186c-.29-.44-.44-.73-.73-.87Z"/><path class="icn5-2" d="M211.35,212.74l-11.78-10.91a22,22,0,1,0-40.15-12.36,21.85,21.85,0,0,0,22,22,22.93,22.93,0,0,0,12.37-3.78l10.91,11.79.29.29a4.74,4.74,0,0,0,6.4-7ZM190.69,193.4h-5.52v5.53a3.79,3.79,0,0,1-7.57,0V193.4h-5.53a3.76,3.76,0,0,1-3.78-3.78,3.86,3.86,0,0,1,3.78-3.79h5.53v-5.52a3.79,3.79,0,1,1,7.57,0v5.52h5.52a3.79,3.79,0,1,1,0,7.57Z"/></svg>
-                          
-                    </div>
+            <!-- Card 6 -->
+            <div class="feature-card reveal" style="transition-delay:0.30s">
+                <div class="feature-number">06</div>
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn6-1{fill:none;stroke:rgba(255,255,255,0.3);stroke-miterlimit:10;stroke-width:4.49px;}.icn6-2{fill:#ffffff;}</style></defs><circle class="icn6-1" cx="141.73" cy="141.73" r="134.65"/><path class="icn6-2" d="M208.65,116.72l1.6-.94a8.48,8.48,0,0,1,3.72-1.15A77.47,77.47,0,0,0,166,68.51v6a71.84,71.84,0,0,1,42.62,42.18Z"/><path class="icn6-2" d="M74.81,116.72a71.83,71.83,0,0,1,42.63-42.18v-6a77.52,77.52,0,0,0-47.95,46.12,8.4,8.4,0,0,1,3.72,1.15Z"/><path class="icn6-2" d="M208.65,166.75A71.84,71.84,0,0,1,166,208.93v6A77.47,77.47,0,0,0,214,168.84a8.48,8.48,0,0,1-3.72-1.15Z"/><path class="icn6-2" d="M74.81,166.75l-1.59.94a8.48,8.48,0,0,1-3.72,1.15A77.47,77.47,0,0,0,117.44,215v-6a71.83,71.83,0,0,1-42.63-42.18Z"/><path class="icn6-2" d="M124.56,83.46l15.72,9.29a2.91,2.91,0,0,0,2.91,0l15.72-9.29a2.86,2.86,0,0,0,1.4-2.46V62.42a2.85,2.85,0,0,0-1.4-2.46l-15.72-9.29a2.86,2.86,0,0,0-2.91,0L124.56,60a2.85,2.85,0,0,0-1.4,2.46V81A2.86,2.86,0,0,0,124.56,83.46Zm4.31-19.41,12.86-7.6,12.86,7.6V79.37L141.73,87l-12.86-7.6Z"/><path class="icn6-2" d="M158.91,200l-15.72-9.29a2.86,2.86,0,0,0-2.91,0L124.56,200a2.85,2.85,0,0,0-1.4,2.46v18.58a2.86,2.86,0,0,0,1.4,2.46l15.72,9.29h0a2.86,2.86,0,0,0,2.91,0l15.72-9.29h0a2.86,2.86,0,0,0,1.4-2.46V202.47a2.85,2.85,0,0,0-1.4-2.46Zm-4.31,19.41L141.73,227l-12.86-7.59V204.1l12.86-7.6,12.87,7.6Z"/><path class="icn6-2" d="M86,153.48a2.85,2.85,0,0,0,1.4-2.46V132.44A2.86,2.86,0,0,0,86,130L70.31,120.7a2.86,2.86,0,0,0-2.91,0L51.68,130a2.87,2.87,0,0,0-1.41,2.46V151a2.86,2.86,0,0,0,1.41,2.46l15.72,9.29h0a2.86,2.86,0,0,0,2.91,0Zm-30-4.09V134.08l12.86-7.6,12.86,7.6v15.31L68.85,157Z"/><path class="icn6-2" d="M231.79,130l-15.72-9.29a2.86,2.86,0,0,0-2.91,0L197.44,130a2.85,2.85,0,0,0-1.4,2.46V151a2.84,2.84,0,0,0,1.4,2.46l15.72,9.29h0a2.86,2.86,0,0,0,2.91,0l15.72-9.29h0a2.84,2.84,0,0,0,1.4-2.46V132.45A2.85,2.85,0,0,0,231.79,130Zm-4.32,19.4L214.61,157l-12.86-7.6V134.08l12.86-7.6,12.86,7.6Z"/><path class="icn6-2" d="M157.45,120.3a15.74,15.74,0,1,0-4.61,11.11A15.76,15.76,0,0,0,157.45,120.3Zm-15.72,10a10,10,0,1,1,7.07-2.93,10,10,0,0,1-7.07,2.93Z"/><path class="icn6-2" d="M154.74,141.32a2.87,2.87,0,0,0,.67,2.91l4,4.09-1,5.82h0a2.87,2.87,0,0,0,4.21,3l4.8-2.66,4.8,2.66h0a2.86,2.86,0,0,0,4.2-3l-1-5.82,4-4.09h0a2.89,2.89,0,0,0,.66-2.91,2.86,2.86,0,0,0-2.28-1.91l-5.4-.83L170,133.37h0a2.86,2.86,0,0,0-5.17,0l-2.44,5.21-5.41.83h0A2.86,2.86,0,0,0,154.74,141.32ZM164.8,144a2.84,2.84,0,0,0,2.15-1.61l.51-1.08.5,1.08a2.86,2.86,0,0,0,2.16,1.61l1.41.22-1.12,1.14a2.86,2.86,0,0,0-.77,2.46l.23,1.43-1-.57h0a2.84,2.84,0,0,0-2.77,0l-1,.57.24-1.43h0a2.89,2.89,0,0,0-.78-2.46l-1.12-1.14Z"/><path class="icn6-2" d="M135.09,140.67l-3.31,16.82a2.85,2.85,0,0,0,.88,2.66l7.14,6.55h0a2.84,2.84,0,0,0,3.86,0l7.15-6.55h0a2.87,2.87,0,0,0,.87-2.66l-3.31-16.82a21.08,21.08,0,0,1-5.62,1l3,15.34-4,3.7-4-3.7,3-15.34a21.16,21.16,0,0,1-5.63-1Z"/><path class="icn6-2" d="M173.17,171.83v-8.69a8.48,8.48,0,0,1-3.68-1l-2-1.12v10.85a2.74,2.74,0,0,1-2.68,2.77H118.69a2.73,2.73,0,0,1-2.68-2.77V153.32a12.91,12.91,0,0,1,12.73-13h5.36a21.42,21.42,0,0,1-8.09-5.48,18.63,18.63,0,0,0-15.71,18.5v18.51a8.45,8.45,0,0,0,8.39,8.49h46.09a8.45,8.45,0,0,0,8.39-8.49Z"/><path class="icn6-2" d="M149.87,67.72a2.85,2.85,0,0,0-3.93-.91l-5.76,3.6L138.26,68h0a2.86,2.86,0,1,0-4.48,3.56L137.29,76h0a2.89,2.89,0,0,0,3.75.64l7.92-5a2.87,2.87,0,0,0,1.28-1.78,2.92,2.92,0,0,0-.37-2.16Z"/><path class="icn6-2" d="M138.25,208a2.86,2.86,0,1,0-4.47,3.56l3.51,4.41h0a2.89,2.89,0,0,0,3.75.65l7.92-5a2.86,2.86,0,1,0-3-4.84l-5.75,3.6Z"/><path class="icn6-2" d="M73.05,136.83l-5.75,3.6L65.38,138h0a2.85,2.85,0,1,0-4.47,3.55L64.41,146a2.9,2.9,0,0,0,3.75.65l7.92-5a2.86,2.86,0,0,0-3-4.85Z"/><path class="icn6-2" d="M211.14,138a2.86,2.86,0,0,0-4.48,3.55l3.51,4.42h0a2.89,2.89,0,0,0,3.75.64l7.93-4.95a2.86,2.86,0,0,0-3-4.85l-5.76,3.6Z"/></svg>
                 </div>
-                <div class="mt-4">
-                    <p class="text-xs font-bold uppercase text-white/90 mb-2">KORZYŚĆ:</p>
-                    <p class="text-sm">Oszczędność czasu - nie ma konieczności przepisywania informacji do komputera</p>
-                </div>
-            </div>
-            <div class="bg-[#3B82F6] sharp-tile p-8 text-white min-h-[300px] flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-semibold leading-tight">Dostosowanie ekranu prezentacji danych zależnie od Oddziału</h3>
-                        <svg class="w-10 h-10 flex-shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn6-1{fill:none;stroke:rgba(255,255,255,0.4);stroke-miterlimit:10;stroke-width:4.49px;}.icn6-2{fill:#ffffff;}</style></defs><circle class="icn6-1" cx="141.73" cy="141.73" r="134.65"/><path class="icn6-2" d="M208.65,116.72l1.6-.94a8.48,8.48,0,0,1,3.72-1.15A77.47,77.47,0,0,0,166,68.51v6a71.84,71.84,0,0,1,42.62,42.18Z"/><path class="icn6-2" d="M74.81,116.72a71.83,71.83,0,0,1,42.63-42.18v-6a77.52,77.52,0,0,0-47.95,46.12,8.4,8.4,0,0,1,3.72,1.15Z"/><path class="icn6-2" d="M208.65,166.75A71.84,71.84,0,0,1,166,208.93v6A77.47,77.47,0,0,0,214,168.84a8.48,8.48,0,0,1-3.72-1.15Z"/><path class="icn6-2" d="M74.81,166.75l-1.59.94a8.48,8.48,0,0,1-3.72,1.15A77.47,77.47,0,0,0,117.44,215v-6a71.83,71.83,0,0,1-42.63-42.18Z"/><path class="icn6-2" d="M124.56,83.46l15.72,9.29a2.91,2.91,0,0,0,2.91,0l15.72-9.29a2.86,2.86,0,0,0,1.4-2.46V62.42a2.85,2.85,0,0,0-1.4-2.46l-15.72-9.29a2.86,2.86,0,0,0-2.91,0L124.56,60a2.85,2.85,0,0,0-1.4,2.46V81A2.86,2.86,0,0,0,124.56,83.46Zm4.31-19.41,12.86-7.6,12.86,7.6V79.37L141.73,87l-12.86-7.6Z"/><path class="icn6-2" d="M158.91,200l-15.72-9.29a2.86,2.86,0,0,0-2.91,0L124.56,200a2.85,2.85,0,0,0-1.4,2.46v18.58a2.86,2.86,0,0,0,1.4,2.46l15.72,9.29h0a2.86,2.86,0,0,0,2.91,0l15.72-9.29h0a2.86,2.86,0,0,0,1.4-2.46V202.47a2.85,2.85,0,0,0-1.4-2.46Zm-4.31,19.41L141.73,227l-12.86-7.59V204.1l12.86-7.6,12.87,7.6Z"/><path class="icn6-2" d="M86,153.48a2.85,2.85,0,0,0,1.4-2.46V132.44A2.86,2.86,0,0,0,86,130L70.31,120.7a2.86,2.86,0,0,0-2.91,0L51.68,130a2.87,2.87,0,0,0-1.41,2.46V151a2.86,2.86,0,0,0,1.41,2.46l15.72,9.29h0a2.86,2.86,0,0,0,2.91,0Zm-30-4.09V134.08l12.86-7.6,12.86,7.6v15.31L68.85,157Z"/><path class="icn6-2" d="M231.79,130l-15.72-9.29a2.86,2.86,0,0,0-2.91,0L197.44,130a2.85,2.85,0,0,0-1.4,2.46V151a2.84,2.84,0,0,0,1.4,2.46l15.72,9.29h0a2.86,2.86,0,0,0,2.91,0l15.72-9.29h0a2.84,2.84,0,0,0,1.4-2.46V132.45A2.85,2.85,0,0,0,231.79,130Zm-4.32,19.4L214.61,157l-12.86-7.6V134.08l12.86-7.6,12.86,7.6Z"/><path class="icn6-2" d="M157.45,120.3a15.74,15.74,0,1,0-4.61,11.11A15.76,15.76,0,0,0,157.45,120.3Zm-15.72,10a10,10,0,1,1,7.07-2.93,10,10,0,0,1-7.07,2.93Z"/><path class="icn6-2" d="M154.74,141.32a2.87,2.87,0,0,0,.67,2.91l4,4.09-1,5.82h0a2.87,2.87,0,0,0,4.21,3l4.8-2.66,4.8,2.66h0a2.86,2.86,0,0,0,4.2-3l-1-5.82,4-4.09h0a2.89,2.89,0,0,0,.66-2.91,2.86,2.86,0,0,0-2.28-1.91l-5.4-.83L170,133.37h0a2.86,2.86,0,0,0-5.17,0l-2.44,5.21-5.41.83h0A2.86,2.86,0,0,0,154.74,141.32ZM164.8,144a2.84,2.84,0,0,0,2.15-1.61l.51-1.08.5,1.08a2.86,2.86,0,0,0,2.16,1.61l1.41.22-1.12,1.14a2.86,2.86,0,0,0-.77,2.46l.23,1.43-1-.57h0a2.84,2.84,0,0,0-2.77,0l-1,.57.24-1.43h0a2.89,2.89,0,0,0-.78-2.46l-1.12-1.14Z"/><path class="icn6-2" d="M135.09,140.67l-3.31,16.82a2.85,2.85,0,0,0,.88,2.66l7.14,6.55h0a2.84,2.84,0,0,0,3.86,0l7.15-6.55h0a2.87,2.87,0,0,0,.87-2.66l-3.31-16.82a21.08,21.08,0,0,1-5.62,1l3,15.34-4,3.7-4-3.7,3-15.34a21.16,21.16,0,0,1-5.63-1Z"/><path class="icn6-2" d="M173.17,171.83v-8.69a8.48,8.48,0,0,1-3.68-1l-2-1.12v10.85a2.74,2.74,0,0,1-2.68,2.77H118.69a2.73,2.73,0,0,1-2.68-2.77V153.32a12.91,12.91,0,0,1,12.73-13h5.36a21.42,21.42,0,0,1-8.09-5.48,18.63,18.63,0,0,0-15.71,18.5v18.51a8.45,8.45,0,0,0,8.39,8.49h46.09a8.45,8.45,0,0,0,8.39-8.49Z"/><path class="icn6-2" d="M149.87,67.72a2.85,2.85,0,0,0-3.93-.91l-5.76,3.6L138.26,68h0a2.86,2.86,0,1,0-4.48,3.56L137.29,76h0a2.89,2.89,0,0,0,3.75.64l7.92-5a2.87,2.87,0,0,0,1.28-1.78,2.92,2.92,0,0,0-.37-2.16Z"/><path class="icn6-2" d="M138.25,208a2.86,2.86,0,1,0-4.47,3.56l3.51,4.41h0a2.89,2.89,0,0,0,3.75.65l7.92-5a2.86,2.86,0,1,0-3-4.84l-5.75,3.6Z"/><path class="icn6-2" d="M73.05,136.83l-5.75,3.6L65.38,138h0a2.85,2.85,0,1,0-4.47,3.55L64.41,146a2.9,2.9,0,0,0,3.75.65l7.92-5a2.86,2.86,0,0,0-3-4.85Z"/><path class="icn6-2" d="M211.14,138a2.86,2.86,0,0,0-4.48,3.55l3.51,4.42h0a2.89,2.89,0,0,0,3.75.64l7.93-4.95a2.86,2.86,0,0,0-3-4.85l-5.76,3.6Z"/></svg>
-                          
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <p class="text-xs font-bold uppercase text-white/90 mb-2">KORZYŚĆ:</p>
-                    <p class="text-sm">Dane dostosowane do różnych dyscyplin medycznych</p>
-                </div>
-            </div>
-            <div class="bg-[#1E1B9B] sharp-tile p-8 text-white min-h-[300px] flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-semibold leading-tight">Integracja z systemami autoryzacji centralnej np. LDAP</h3>
-                        <svg class="w-10 h-10 flex-shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn7-1{fill:none;stroke:rgba(255,255,255,0.4);stroke-miterlimit:10;stroke-width:4.49px;}.icn7-2{fill:#ffffff;}</style></defs><circle class="icn7-1" cx="141.73" cy="141.73" r="134.65"/><path class="icn7-2" d="M216,129.29a3.12,3.12,0,0,0-2.88-2.57H202.7a62.54,62.54,0,0,0-7.45-18l.85-.86c2.14-2.14,4.28-4.34,6.48-6.41a3.09,3.09,0,0,0,.37-4,75.93,75.93,0,0,0-17.42-17.36,3.09,3.09,0,0,0-4,.37c-1.16,1.22-2.38,2.38-3.54,3.55s-2.51,2.5-3.73,3.78a62.74,62.74,0,0,0-18-7.39V70.12a3.1,3.1,0,0,0-2.57-3.06,76.36,76.36,0,0,0-24.14,0A3.13,3.13,0,0,0,127,70.3c.06,1.29.06,2.63,0,3.91v6.24a62.74,62.74,0,0,0-18,7.39c-1.22-1.28-2.51-2.5-3.73-3.78l-3.54-3.55a3.09,3.09,0,0,0-4-.37A77.14,77.14,0,0,0,80.27,97.5a3,3,0,0,0,.37,4c2.2,2.13,4.34,4.27,6.48,6.41l.86.86a61.6,61.6,0,0,0-7.46,18c-2.45-.06-4.89-.06-7.28,0H70.07a3,3,0,0,0-2.88,2.57,78.66,78.66,0,0,0,0,24.63,3.08,3.08,0,0,0,2.75,2.57c.25,0,.55.06.8.06h9.84a61.43,61.43,0,0,0,7.58,18.15c-1.41,1.34-2.81,2.75-4.16,4.16l-3.24,3.24a3,3,0,0,0-.24,3.85,77.06,77.06,0,0,0,17.3,17.23,3,3,0,0,0,3.85-.24l.3-.31c1.41-1.46,2.81-2.87,4.22-4.28l2.81-2.81A62.41,62.41,0,0,0,127.09,203v10.57a3,3,0,0,0,2.57,2.82,78.85,78.85,0,0,0,12,1,72.34,72.34,0,0,0,12-1,3.06,3.06,0,0,0,2.57-2.82V203a62.3,62.3,0,0,0,18.09-7.46c.92,1,1.9,1.9,2.81,2.81l4.59,4.59a3,3,0,0,0,3.85.24A74.65,74.65,0,0,0,203,186a3,3,0,0,0-.25-3.85,11.08,11.08,0,0,0-.91-.92l-6.48-6.48a63.34,63.34,0,0,0,7.58-18.15h10.63a3,3,0,0,0,2.75-2.57,74.83,74.83,0,0,0,1-12.29,120.5,120.5,0,0,0-1.22-12.4Zm-5.69,21H200a3.13,3.13,0,0,0-2.81,2.45,56,56,0,0,1-8.56,20.47,3.16,3.16,0,0,0,0,3.49,5.66,5.66,0,0,0,1,1.1c1.77,1.71,3.55,3.48,5.32,5.25l1.28,1.29a69.63,69.63,0,0,1-12.22,12.16l-6.6-6.6a6.22,6.22,0,0,0-1.16-1,3.08,3.08,0,0,0-3.37,0,55.49,55.49,0,0,1-20.35,8.38,3.09,3.09,0,0,0-2.38,2.26,8,8,0,0,0-.19,1.83c.06,2.2.06,4.34.06,6.54v2.51a71.55,71.55,0,0,1-16.93,0V208c0-2.2,0-4.34.06-6.54a8.6,8.6,0,0,0-.18-1.83,3,3,0,0,0-2.38-2.26,54.7,54.7,0,0,1-20.36-8.38,3.06,3.06,0,0,0-3.36,0,5.92,5.92,0,0,0-1.16,1c-1.28,1.34-2.63,2.69-4,4-.86.86-1.78,1.71-2.63,2.63a69.69,69.69,0,0,1-12.23-12.16l1.29-1.29c1.77-1.77,3.48-3.54,5.31-5.25a7.35,7.35,0,0,0,.92-1.1,3,3,0,0,0,0-3.49,56,56,0,0,1-8.56-20.47A3,3,0,0,0,83,150.31a2.49,2.49,0,0,0-.67,0H72.57a69.24,69.24,0,0,1,0-17.42H73c2.75,0,5.62,0,8.44.06a10.63,10.63,0,0,0,2.07-.18,2.94,2.94,0,0,0,2.2-2.38,56.69,56.69,0,0,1,8.38-20.17,3.2,3.2,0,0,0,.06-3.37,12,12,0,0,0-1.71-1.95l-5.81-5.81A68.45,68.45,0,0,1,99,86.68l1.71,1.72c1.53,1.52,3.06,3,4.52,4.58a7.17,7.17,0,0,0,2,1.47,3.13,3.13,0,0,0,2.93-.25,55.45,55.45,0,0,1,20.24-8.31,3.14,3.14,0,0,0,2.38-2.2,8,8,0,0,0,.18-1.77c-.06-1.41-.06-2.75,0-4.16V72.69a70.51,70.51,0,0,1,16.93,0v9.23a7.45,7.45,0,0,0,.19,1.77,3,3,0,0,0,2.38,2.2,55.41,55.41,0,0,1,20.23,8.31,3.15,3.15,0,0,0,2.94.25,7.1,7.1,0,0,0,2-1.47c1.47-1.53,3-3.06,4.53-4.58l1.71-1.72A69.36,69.36,0,0,1,196.28,99l-5.8,5.81a11.13,11.13,0,0,0-1.71,2,3,3,0,0,0,.06,3.36,57,57,0,0,1,8.37,20.17,3.14,3.14,0,0,0,2.2,2.39,5.74,5.74,0,0,0,2.08.18c2.81-.12,5.68-.06,8.44-.06h.42a69.3,69.3,0,0,1,.55,8.74,68.05,68.05,0,0,1-.55,8.8Z"/><path class="icn7-2" d="M173.67,118.47a38.32,38.32,0,0,0-9.17-9.11,39.6,39.6,0,0,0-46.15,0,39.73,39.73,0,0,0-16.14,25.79,38.82,38.82,0,0,0-.55,6.48,45.56,45.56,0,0,0,.49,6.42,39.48,39.48,0,0,0,7,16.81,38.94,38.94,0,0,0,9.11,9,40.11,40.11,0,0,0,16.75,6.9,40.68,40.68,0,0,0,12.59,0,40.11,40.11,0,0,0,16.75-6.9,41.33,41.33,0,0,0,9.1-9,39.23,39.23,0,0,0,7-16.81,40.27,40.27,0,0,0-.06-12.9,37.32,37.32,0,0,0-6.78-16.68Zm.91,28.6A33.47,33.47,0,0,1,161,168.89a32.86,32.86,0,0,1-14.12,5.81,34.84,34.84,0,0,1-10.69,0A33.51,33.51,0,0,1,122,168.89a34.66,34.66,0,0,1-7.7-7.64,33.61,33.61,0,0,1-5.93-14.18,31.61,31.61,0,0,1-.43-5.44,33,33,0,0,1,.43-5.5A33.82,33.82,0,0,1,114.2,122a33.67,33.67,0,0,1,21.88-13.5,33.81,33.81,0,0,1,10.75,0,33,33,0,0,1,14.12,5.8,34.41,34.41,0,0,1,7.77,7.7,33.94,33.94,0,0,1,5.86,14.12,32,32,0,0,1,.43,5.5A39,39,0,0,1,174.58,147.07Z"/><path class="icn7-2" d="M157,128.06l-21.7,20.6L126,138.94a3.07,3.07,0,0,0-4.4,4.28l11.49,11.92a3.12,3.12,0,0,0,2.2.92,3.28,3.28,0,0,0,2.14-.86l24-22.73a3.08,3.08,0,0,0,.12-4.34,3.17,3.17,0,0,0-4.46-.07Z"/></svg>
-                          
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <p class="text-xs font-bold uppercase text-white/90 mb-2">KORZYŚĆ:</p>
-                    <p class="text-sm">Brak konieczności zapamiętywania dodatkowych danych autoryzacyjnych</p>
-                </div>
-            </div>
-            <div class="bg-[#2143C1] sharp-tile p-8 text-white min-h-[300px] flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-semibold leading-tight">Wyliczanie wartości pochodnych z przesyłanych danych</h3>
-                        <svg class="w-10 h-10 flex-shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 283.46"><defs><style>.icn8-1{fill:none;stroke:rgba(255,255,255,0.4);stroke-miterlimit:10;stroke-width:4.49px;}.icn8-2{fill:#ffffff;}</style></defs><circle class="icn8-1" cx="141.73" cy="141.73" r="134.65"/><path class="icn8-2" d="M147.75,224.56a2.45,2.45,0,0,0,2.52,2.51h23.35a2.45,2.45,0,0,0,2.52-2.51V212H147.75Z"/><path class="icn8-2" d="M215.13,138.86a5.34,5.34,0,0,0-3.6-2.34,5.74,5.74,0,0,0-5.39,2.16l-10.42,14.37c.18.36.54.54.72.9a11.07,11.07,0,0,1-.72,13.3l-.72.89a96.13,96.13,0,0,1-13.83,13.3l-3.95,3.23a3,3,0,0,1-4.32-.54,3.12,3.12,0,0,1,.36-4.31l4.14-3.23A107.49,107.49,0,0,0,190.33,164l.72-.9a4.6,4.6,0,0,0,.36-5.57,4.68,4.68,0,0,0-6.47-1.25l-22.46,15.63a13.9,13.9,0,0,0-5.21,7.18L149,205.69h29.28l19.59-11.85a15.18,15.18,0,0,0,6.83-9.17l11.13-41.32a5.69,5.69,0,0,0-.71-4.49Z"/><path class="icn8-2" d="M126.73,179.1a13.9,13.9,0,0,0-5.21-7.18L99.06,156.29a4.76,4.76,0,0,0-3.41-.72,4.44,4.44,0,0,0-3.06,2,4.34,4.34,0,0,0,.36,5.57l.72.9a106.82,106.82,0,0,0,12.94,12.58l4,3.23a2.57,2.57,0,0,1,1.08,2.16,3.59,3.59,0,0,1-.72,2.33,2.57,2.57,0,0,1-2.16,1.08,3.61,3.61,0,0,1-2.33-.72l-4.13-3.23a105.91,105.91,0,0,1-13.84-13.3l-.72-.89A10.82,10.82,0,0,1,87,154a3.16,3.16,0,0,1,.72-.9L77.32,138.68a5.58,5.58,0,0,0-5.39-2.16,4.64,4.64,0,0,0-3.59,2.34,5.24,5.24,0,0,0-.72,4.31l11.14,41.32a14.82,14.82,0,0,0,6.83,9.17l19.58,12h29.29Z"/><path class="icn8-2" d="M107.68,224.56a2.45,2.45,0,0,0,2.52,2.51h23.36a2.45,2.45,0,0,0,2.51-2.51V212H107.68Z"/><path class="icn8-2" d="M151.88,162.39h3.06a2.06,2.06,0,0,0,2.15-2.15v-7.37h-30v7.37a2.07,2.07,0,0,0,2.15,2.15h3.06a9.93,9.93,0,0,0,19.58,0Z"/><path class="icn8-2" d="M120.08,132.75a40.09,40.09,0,0,1,7,12.58h29.64a46.83,46.83,0,0,1,7-12.58,27.59,27.59,0,0,0,5.93-18.51,28,28,0,0,0-26.59-26.59,27.16,27.16,0,0,0-20.48,7.73A27.58,27.58,0,0,0,114,115.5a30.05,30.05,0,0,0,6.11,17.25ZM128,115a4.45,4.45,0,0,1,6.11,0l3.77,3.77L148.65,108a4.47,4.47,0,0,1,6.11,0,4.68,4.68,0,0,1,0,6.29l-13.84,13.84a4.06,4.06,0,0,1-2.87,1.08A4.7,4.7,0,0,1,135,127.9l-6.82-6.83A4.29,4.29,0,0,1,128,115Z"/><path class="icn8-2" d="M142,79.21a6,6,0,0,0,5.93-5.93v-11a5.93,5.93,0,0,0-11.86,0v11A6,6,0,0,0,142,79.21Z"/><path class="icn8-2" d="M108,89.63a6.2,6.2,0,0,0,4.14,1.8,5.46,5.46,0,0,0,4.13-1.8,6,6,0,0,0,0-8.45l-7.73-7.72a6,6,0,0,0-8.44,8.44Z"/><path class="icn8-2" d="M171.83,91.6A5.45,5.45,0,0,0,176,89.81l7.72-7.73a6,6,0,0,0-8.44-8.44l-7.73,7.72a6,6,0,0,0,0,8.45A7,7,0,0,0,171.83,91.6Z"/></svg>
-                          
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <p class="text-xs font-bold uppercase text-white/90 mb-2">KORZYŚĆ:</p>
-                    <p class="text-sm">Większe możliwości diagnostyczne poparte wyliczanymi informacjami</p>
-                </div>
+                <div class="feature-title">Dostosowanie ekranu prezentacji danych zależnie od Oddziału</div>
+                <div class="feature-divider"></div>
+                <div class="feature-benefit-label">Korzyść</div>
+                <div class="feature-benefit">Dane dostosowane do różnych dyscyplin medycznych</div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="bg-white py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-        <h2 class="text-4xl lg:text-5xl font-bold text-[#0033A0]">
-            HosPanel™ jest modułem środowiska <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] to-[#1E1B9B]">AirBan™</span>
-        </h2>
-    </div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="relative flex flex-col md:flex-row bg-[#1E1B9B] text-white overflow-hidden shadow-2xl airban-grid-bg sharp-tile">
-            <div class="relative md:w-1/3 p-12 lg:p-16 flex flex-col justify-center items-start border-b md:border-b-0 md:border-r border-white/10 bg-[#2563EB]/20">
-                <h3 class="text-4xl lg:text-5xl font-bold mb-10 leading-tight">Środowisko <br/><span class="text-[#3B82F6]">AirBan™</span></h3>
-                <div class="flex space-x-6">
-                    <div class="group relative">
-                        <button class="relative w-16 h-16 bg-[#1E1B9B] border border-white/20 flex items-center justify-center text-2xl font-black text-white group-hover:border-[#3B82F6] transition-all duration-300 sharp-tile">A</button>
-                        <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Module A</span>
-                    </div>
-                    <div class="group relative">
-                        <button class="relative w-16 h-16 bg-[#1E1B9B] border border-white/20 flex items-center justify-center text-2xl font-black text-white group-hover:border-[#3B82F6] transition-all duration-300 sharp-tile">B</button>
-                        <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Module B</span>
-                    </div>
+<!-- ===== AIRBAN SECTION ===== -->
+<section class="airban">
+    <div class="container">
+        <div class="airban-header reveal">
+            <h2>
+                HosPanel™ jest modułem środowiska<br/>
+                <span class="gradient-text">AirBan™</span>
+            </h2>
+        </div>
+        <div class="airban-block reveal">
+            <div class="airban-left">
+                <div>
+                    <div class="airban-logo">Środowisko<br/><span>AirBan™</span></div>
+                    <p style="font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6;">Jeden spójny ekosystem rozwiązań szpitalnych</p>
+                </div>
+                <div class="airban-modules">
+                    <button class="airban-module-btn">A</button>
+                    <button class="airban-module-btn">B</button>
                 </div>
             </div>
-            <div class="relative md:w-2/3 p-12 lg:p-16 flex flex-col justify-between">
+            <div class="airban-right">
                 <div>
-                    <p class="text-xl lg:text-2xl text-blue-50/90 font-light mb-8 leading-relaxed">
+                    <p class="airban-text">
                         Stworzyliśmy jedno środowisko AirBan, które pozwala łączyć ze sobą rozwiązania systemowe i kolejno rozwijać system o kolejne moduły.
                     </p>
-                    <div class="glass-card p-6" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <p class="text-lg font-medium text-white/90 italic">
-                            AirBan™ nie jest produktem sam w sobie, tylko środowiskiem, w którym pracują niektóre z naszych produktów, oznaczone symbolem AB, stanowiące poszczególne moduły systemu.
-                        </p>
+                    <div class="airban-quote">
+                        AirBan™ nie jest produktem sam w sobie, tylko środowiskiem, w którym pracują niektóre z naszych produktów, oznaczone symbolem AB, stanowiące poszczególne moduły systemu.
                     </div>
                 </div>
-                <div class="mt-12">
-                    <button class="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-200 bg-[#2563EB] hover:bg-[#3B82F6] sharp-tile">
-                        Poznaj korzyści AirBan™
-                        <svg class="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-                    </button>
-                </div>
+                <a href="#" class="btn-primary">
+                    Poznaj korzyści AirBan™
+                    <svg class="btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+                </a>
             </div>
         </div>
     </div>
 </section>
 
-<section class="bg-gray-50 py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-4xl font-bold text-center text-[#0033A0] mb-16">
-            Zobacz pozostałe <span class="text-[#1E1B9B]">moduły AirBan™</span>
-        </h2>
-
-        <div class="modules-wrapper">
-
-            <div class="modules-grid">
-
-                <div class="module-tile" 
-                     onmouseenter="playVideo(this)" 
-                     onmouseleave="pauseVideo(this)">
-                    <div class="module-tile-top" style="background-color: #2563EB;">
+<!-- ===== MODULES SECTION ===== -->
+<section class="modules-section">
+    <div class="container">
+        <div class="modules-section-header reveal">
+            <div class="section-eyebrow">Ekosystem</div>
+            <h2>Pozostałe moduły <span>AirBan™</span></h2>
+        </div>
+        <div class="modules-wrapper reveal">
+            <div class="modules-row">
+                <div class="module-tile" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background:#133AD8;">
                         <h4>SorBan™</h4>
                         <p>System wspiera pracę Szpitalnego Oddziału Ratunkowego</p>
                     </div>
                     <div class="module-tile-video">
-                        <video muted playsinline preload="metadata">
-                            <source src="./SorBan.mp4" type="video/mp4"/>
-                        </video>
+                        <video muted playsinline preload="metadata"><source src="./SorBan.mp4" type="video/mp4"/></video>
                     </div>
                 </div>
-
-                <div class="module-tile"
-                     onmouseenter="playVideo(this)"
-                     onmouseleave="pauseVideo(this)">
-                    <div class="module-tile-top" style="background-color: #1E1B9B;">
+                <div class="module-tile" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background:#1A48E8;">
                         <h4>RadBan™</h4>
                         <p>System wspierający organizację pracy zakładów diagnostyki obrazowej</p>
                     </div>
                     <div class="module-tile-video">
-                        <video muted playsinline preload="metadata">
-                            <source src="./RadBan.mp4" type="video/mp4"/>
-                        </video>
+                        <video muted playsinline preload="metadata"><source src="./RadBan.mp4" type="video/mp4"/></video>
                     </div>
                 </div>
-
-                <div class="module-tile active-tile"
-                     onmouseenter="playVideo(this)"
-                     onmouseleave="pauseVideo(this)">
-                    <div class="module-tile-top" style="background-color: #2143C1; border: 2px solid rgba(255,255,255,0.25);">
+                <div class="module-tile active-tile" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background:#111F40;">
                         <h4>HosPanel™</h4>
-                        <p>Elektroniczny obchód lekarski systemem oceny parametrów życiowych oraz modułem ZWR</p>
+                        <p>Elektroniczny obchód lekarski z systemem oceny parametrów życiowych oraz modułem ZWR</p>
                     </div>
                     <div class="module-tile-video">
-                        <video muted playsinline preload="metadata">
-                            <source src="./HosPanel.mp4" type="video/mp4"/>
-                        </video>
+                        <video muted playsinline preload="metadata"><source src="./HosPanel.mp4" type="video/mp4"/></video>
                     </div>
                 </div>
             </div>
-
-            <div class="modules-grid">
-
-                <div class="module-tile"
-                     onmouseenter="playVideo(this)"
-                     onmouseleave="pauseVideo(this)">
-                    <div class="module-tile-top" style="background-color: #3B82F6;">
+            <div class="modules-row">
+                <div class="module-tile" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background:#133AD8;">
                         <h4>eCRF</h4>
                         <p>Zintegrowana platforma badawcza</p>
                     </div>
                     <div class="module-tile-video">
-                        <video muted playsinline preload="metadata">
-                            <source src="./eCRF.mp4" type="video/mp4"/>
-                        </video>
+                        <video muted playsinline preload="metadata"><source src="./eCRF.mp4" type="video/mp4"/></video>
                     </div>
                 </div>
-
-                <div class="module-tile"
-                     onmouseenter="playVideo(this)"
-                     onmouseleave="pauseVideo(this)">
-                    <div class="module-tile-top" style="background-color: #2143C1;">
+                <div class="module-tile" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background:#1A48E8;">
                         <h4>Systemy dedykowane</h4>
                         <p>Naszą specjalizacją w tym zakresie są integracje między systemami.</p>
                     </div>
                     <div class="module-tile-video">
-                        <video muted playsinline preload="metadata">
-                            <source src="./SystemyDedykowane.mp4" type="video/mp4"/>
-                        </video>
+                        <video muted playsinline preload="metadata"><source src="./SystemyDedykowane.mp4" type="video/mp4"/></video>
                     </div>
                 </div>
-
-                <div class="module-tile"
-                     onmouseenter="playVideo(this)"
-                     onmouseleave="pauseVideo(this)">
-                    <div class="module-tile-top" style="background-color: #1E1B9B;">
+                <div class="module-tile" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+                    <div class="module-tile-top" style="background:#111F40;">
                         <h4>Optymalizacja procesów</h4>
                         <p>Optymalizacja zagadnień w części „białej", jak i w części „szarej".</p>
                     </div>
                     <div class="module-tile-video">
-                        <video muted playsinline preload="metadata">
-                            <source src="./OptymalizacjaProcesow.mp4" type="video/mp4"/>
-                        </video>
+                        <video muted playsinline preload="metadata"><source src="./OptymalizacjaProcesow.mp4" type="video/mp4"/></video>
                     </div>
                 </div>
             </div>
-            
-        </div>
-        </div>
-</section>
-
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="flex flex-col md:flex-row bg-[#1E1B9B] overflow-hidden sharp-tile">
-        <div class="md:w-1/2 p-12 text-white flex flex-col justify-between">
-            <div>
-                <h3 class="text-3xl font-semibold leading-tight mb-8">
-                    Chcesz zoptymalizować procesy w swoim szpitalu? Zapytaj nas o najlepsze rozwiązanie. Zapraszamy do kontaktu.
-                </h3>
-            </div>
-            <div class="text-lg">
-                info@etrustmedical.com
-            </div>
-        </div>
-        <div class="md:w-1/2 bg-gray-900">
-            <img alt="Contact Person" class="w-full h-full object-cover opacity-80" src="./Mariusz-Budzisz.jpg"/>
         </div>
     </div>
 </section>
 
-<footer class="bg-[#122445] text-white py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            <div class="space-y-2 text-sm text-gray-300">
-                <a class="block hover:text-white" href="#">O nas</a>
-                <a class="block hover:text-white" href="#">Zespół</a>
-                <a class="block hover:text-white font-bold text-white" href="#">Produkty</a>
-                <a class="block hover:text-white" href="#">Kontakt</a>
-            </div>
-            <div class="space-y-4 text-xs text-gray-400">
-                <a class="block hover:text-white" href="#">Facebook</a>
-                <a class="block hover:text-white" href="#">Linkedin</a>
-            </div>
-            <div class="lg:col-span-2">
-                <h4 class="text-lg font-bold mb-4">Szybki kontakt</h4>
-                <div class="text-sm space-y-1 text-gray-300">
-                    <p>Jan Szweda</p>
-                    <p>jan.szweda@etrustmedical.com</p>
-                    <p>+48 500 312 506</p>
-                </div>
-                <div class="mt-12 flex justify-end">
-                    <div class="flex flex-col items-end space-y-2">
-                        <img src="./logo.svg">
-                        <div class="text-[10px] text-gray-400 text-right">
-                            eTrustMedical © 2022<br/>
-                            Site by Minima Advertising People
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- ===== CONTACT SECTION ===== -->
+<section class="contact-section">
+    <div class="contact-block reveal">
+        <div class="contact-left">
+            <h3>
+                Chcesz zoptymalizować procesy w swoim szpitalu?<br/>
+                Zapytaj nas o najlepsze rozwiązanie.
+            </h3>
+            <a href="mailto:info@etrustmedical.com" class="contact-email">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+                info@etrustmedical.com
+            </a>
+        </div>
+        <div class="contact-right">
+            <img alt="Contact Person" src="./Mariusz-Budzisz.jpg"/>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-links">
+            <a href="#">O nas</a>
+            <a href="#">Zespół</a>
+            <a href="#" class="active">Produkty</a>
+            <a href="#">Kontakt</a>
+        </div>
+        <div class="footer-social">
+            <a href="#">Facebook</a>
+            <a href="#">LinkedIn</a>
+        </div>
+        <div class="footer-contact">
+            <h4>Szybki kontakt</h4>
+            <p>Jan Szweda</p>
+            <a href="mailto:jan.szweda@etrustmedical.com">jan.szweda@etrustmedical.com</a>
+            <br/>
+            <a href="tel:+48500312506">+48 500 312 506</a>
+        </div>
+        <div></div>
+    </div>
+    <div class="footer-bottom">
+        <img src="./logo.svg" alt="eTrust Medical"/>
+        <div class="footer-copy">
+            eTrustMedical © 2022<br/>
+            Site by Minima Advertising People
         </div>
     </div>
 </footer>
 
-<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-100 border-t py-4 z-[100]">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-600">
-        <p>
-            Nasza strona używa plików cookies, aby poprawić Twój komfort użytkowania. Aby uzyskać informacje o naszej polityce plików cookie, zapoznaj się z naszą 
-            <a class="text-[#2563EB] underline" href="#">Polityką prywatności</a>
-        </p>
-        <button id="cookie-ok-btn" class="mt-4 sm:mt-0 bg-[#2563EB] hover:bg-[#1E1B9B] text-white px-8 py-1 sharp-tile">Ok</button>
-    </div>
+<!-- ===== COOKIE BANNER ===== -->
+<div class="cookie-banner" id="cookie-banner">
+    <p class="cookie-text">
+        Nasza strona używa plików cookies, aby poprawić Twój komfort użytkowania.
+        Zapoznaj się z naszą <a href="#">Polityką prywatności</a>.
+    </p>
+    <button class="cookie-btn" id="cookie-ok-btn">Akceptuję</button>
 </div>
 
 <script>
-    // Cookie banner
+    // ===== HEADER SCROLL =====
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ===== SCROLL REVEAL =====
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+    // ===== COOKIE =====
     var cookieBanner = document.getElementById('cookie-banner');
-    if (localStorage.getItem('cookieAccepted')) {
-        cookieBanner.style.display = 'none';
-    }
+    if (localStorage.getItem('cookieAccepted')) cookieBanner.style.display = 'none';
     document.getElementById('cookie-ok-btn').addEventListener('click', function() {
         cookieBanner.style.display = 'none';
         localStorage.setItem('cookieAccepted', '1');
     });
 
+    // ===== MODULE VIDEOS =====
     function playVideo(tile) {
-        const video = tile.querySelector('video');
-        if (video) {
-            video.play().catch(() => {});
-        }
+        const v = tile.querySelector('video');
+        if (v) v.play().catch(() => {});
     }
-
     function pauseVideo(tile) {
-        const video = tile.querySelector('video');
-        if (video) {
-            video.pause();
-            video.currentTime = 0;
-        }
+        const v = tile.querySelector('video');
+        if (v) { v.pause(); v.currentTime = 0; }
     }
-
-    // Preload first frame for all videos
     document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.module-tile video').forEach(video => {
-            video.load();
+        document.querySelectorAll('.module-tile video').forEach(v => v.load());
+    });
+
+    // ===== HERO TEXT STAGGER ON LOAD =====
+    window.addEventListener('load', () => {
+        document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+            setTimeout(() => el.classList.add('visible'), 300 + i * 150);
         });
     });
-</script>
 
+    // ===== SCROLL PROGRESS BAR =====
+    const progressBar = document.createElement('div');
+    progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:#133AD8;z-index:9999;width:0%;transition:width 0.08s linear;pointer-events:none;';
+    document.body.appendChild(progressBar);
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (scrolled / total * 100) + '%';
+    }, { passive: true });
+
+    // ===== HERO PARALLAX =====
+    const heroVideo = document.querySelector('.hero-video');
+    const heroContent = document.querySelector('.hero-content');
+    const heroOverlay = document.querySelector('.hero-overlay');
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y < window.innerHeight) {
+            if (heroVideo) heroVideo.style.transform = 'translateY(' + (y * 0.35) + 'px)';
+            if (heroContent) {
+                heroContent.style.transform = 'translateY(' + (y * 0.18) + 'px)';
+                heroContent.style.opacity = Math.max(0, 1 - (y / (window.innerHeight * 0.72)));
+            }
+        }
+    }, { passive: true });
+
+    // ===== FEATURE CARDS STAGGER ON ENTER =====
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const cards = e.target.querySelectorAll('.feature-card');
+                cards.forEach((card, i) => {
+                    setTimeout(() => card.classList.add('card-visible'), i * 75);
+                });
+                cardObserver.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.08 });
+    const featuresGrid = document.querySelector('.features-grid');
+    if (featuresGrid) cardObserver.observe(featuresGrid);
+
+    // ===== MODULE TILES STAGGER =====
+    const moduleObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const tiles = e.target.querySelectorAll('.module-tile');
+                tiles.forEach((tile, i) => {
+                    setTimeout(() => tile.classList.add('tile-visible'), i * 90);
+                });
+                moduleObserver.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.06 });
+    const modulesWrapper = document.querySelector('.modules-wrapper');
+    if (modulesWrapper) moduleObserver.observe(modulesWrapper);
+
+    // ===== STAT COUNTER ANIMATION =====
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.querySelectorAll('.stat-number').forEach((el, i) => {
+                    el.style.cssText += 'opacity:0;transform:translateY(24px);transition:opacity 0.7s ' + (i*0.12) + 's ease,transform 0.7s ' + (i*0.12) + 's ease;';
+                    requestAnimationFrame(() => requestAnimationFrame(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }));
+                });
+                statObserver.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.4 });
+    const statLine = document.querySelector('.stat-line');
+    if (statLine) statObserver.observe(statLine);
+
+    // ===== EYEBROW LINE ANIMATION =====
+    const eyebrowObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('eyebrow-animated');
+                eyebrowObserver.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.8 });
+    document.querySelectorAll('.section-eyebrow, .hero-eyebrow').forEach(el => eyebrowObserver.observe(el));
+</script>
 </body>
 </html>
